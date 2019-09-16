@@ -1,11 +1,28 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var createError     = require('http-errors');
+var express         = require('express');
+var path            = require('path');
+var cookieParser    = require('cookie-parser');
+var logger          = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var mongoose        = require('mongoose');
+var passport        = require('passport')
+
+var indexRouter     = require('./routes/index');
+var usersRouter     = require('./routes/users/users');
+
+var flash           = require('connect-flash');
+var session         = require('express-session');
+// var expressValidator= require('express-validator');
+
+var MongoStore      = require('connect-mongo')(session);
+
+require('dotenv').config();
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true})
+    .then( ()=>{
+        console.log('MONGODB CONNECTED')
+    })
+    .catch( err => console.log(`ERROR: ${err}`))
 
 var app = express();
 
@@ -18,6 +35,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: process.env.SESSION_SECRET,
+    store: new MongoStore({ url: process.env.MONGODB_URI, autoReconnect: true}),
+    cookie: {
+        secure: false,
+        maxAge: 365 * 24 * 60 * 60 * 1000
+    }
+}));
+
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
