@@ -17,7 +17,9 @@
     "express-validator": "^6.2.0",
     "http-errors": "~1.6.3",
     "install": "^0.13.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.1",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "passport": "^0.4.0"
   }
 }
