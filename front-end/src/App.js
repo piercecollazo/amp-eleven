@@ -3,6 +3,8 @@ import {Route, Link, BrowserRouter as Router, Switch, Redirect} from 'react-rout
 
 import Nav from './components/Nav'
 import Home from './components/Home'
+import Profile from './components/Profile'
+import Event from './components/EventPage'
 
 export default class App extends Component {
   render() {
@@ -13,6 +15,10 @@ export default class App extends Component {
         </div>
         <Switch>
           <Route exact path='/' component={Home} />
+          <Route path='/profile' component={Profile} />
+          <Route path='/About' component={About} />
+          <Route path='/Event' component={Event} />
+          <Route component={NotFound} />
         </Switch>
       </Router>
     )
