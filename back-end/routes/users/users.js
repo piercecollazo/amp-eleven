@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   res.send('Users Home');
 });
 
-router.post('/signupandsignin', function(req, res) {
+router.post('/api/signupandsignin', function(req, res) {
 
     userController.signupAndSignIn(req.body)
                   .then( user => {
@@ -21,14 +21,4 @@ router.post('/signupandsignin', function(req, res) {
   
   });
   
-  router.post('/login', function(req, res) {
-    userController.login(req.body)
-    .then( user => {
-      res.json(user);
-    })
-    .catch( error => {
-      res.json(error);
-    })
-  })
-
 module.exports = router;

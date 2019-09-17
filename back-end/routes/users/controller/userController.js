@@ -11,8 +11,15 @@ module.exports = {
                     if (!user) {
 
                         const newUser = new User({ 
-                                            email: params.email, 
-                                            password: params.password  
+                                            email: params.email,
+                                            username: params.username, 
+                                            password: params.password,
+                                            creator: params.creator,
+                                            follows: params.follows,
+                                            followers: params.followers,
+                                            events: params.events,
+                                            verified: params.verified
+
                                         })
                         bcrypt.genSalt(10, (err, salt) => {
 
