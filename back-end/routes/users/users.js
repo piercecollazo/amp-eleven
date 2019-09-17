@@ -20,5 +20,16 @@ router.post('/api/signupandsignin', function(req, res) {
                   })
   
   });
+
+router.get('/api/profile/:id', function(req,res){
+
+  userController.getUser(req.user._id)
+                .then(user => {
+                  res.json(user)
+                })
+                .catch(error => {
+                  res.status(error.status).json(error)
+                })
+})
   
 module.exports = router;

@@ -121,6 +121,15 @@ module.exports = {
 
         })
 
+    },
+    getUser: (id)=>{
+        return new Promise((resolve, reject)=> {
+            User.findOne({_id: id})
+                .exec((error, user) =>{
+                    if(error) reject(error)
+                    else      resolve(user)
+                })
+        })
     }
 
 }
