@@ -23,7 +23,7 @@ router.post('/api/signupandsignin', function(req, res) {
 
 router.get('/api/profile/:id', function(req,res){
 
-  userController.getUser(req.user._id)
+  userController.getUser(req.params.id)
                 .then(user => {
                   res.json(user)
                 })
