@@ -22,7 +22,7 @@ router.post('/api/signupandsignin', function(req, res) {
   });
 
 router.get('/api/profile/:id', function(req,res){
-
+  // params are a placeholder for manual id fetching in postman
   userController.getUser(req.params.id)
                 .then(user => {
                   res.json(user)
