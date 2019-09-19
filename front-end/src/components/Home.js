@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import BackgroundVideo from '../Assets/video/Amp.mp4'
 
-export default class Home extends Component {
-    render() {
-        return (
+const Home = () => (
+    <div>
             <header class="masthead">
                 <div class="container d-flex h-100 align-items-center">
                   <div class="mx-auto text-center">
@@ -12,10 +11,11 @@ export default class Home extends Component {
                     <a href="#about" class="btn btn-primary js-scroll-trigger">Get          Started</a>
                   </div>
                 </div>
-                <video autoplay muted loop id="backgroundVideo">    
+                {/* <video autoplay muted loop id="backgroundVideo">    
                     <source src={BackgroundVideo} type="video/mp4" />
-                </video>
+                </video> */}
             </header>
+        </div>
         )
-    }
-}
+
+export default Home
