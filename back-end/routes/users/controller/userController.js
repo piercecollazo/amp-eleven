@@ -130,6 +130,61 @@ module.exports = {
                     else      resolve(user)
                 })
         })
-    }
+    },
+
+    follow: (following, user1)=>{
+        //follower
+        return new Promise((resolve, reject) => {
+            User.findOne({_id: user1})
+                .then(user =>{
+            
+                    user.follows.push({
+                      id: following
+                    })
+                    user.save()
+                    .then(user => {
+                        resolve(user)
+                    })
+                    .catch(error =>{
+                        let errors = {}
+                        errors.message = error
+                        errors.status  = 400
+                        reject(errors)
+                    })
+                })
+                .catch(error =>{
+                    let errors = {}
+                    errors.message = error
+                    errors.status  = 400
+                    reject(errors)   
+                })
+                .then(
+            User.findOne({_id: following})
+                .then(user =>{
+                    user.followers.push({
+                      id: user1
+                    })
+                    user.save()
+                    .then(user => {
+                        resolve(user)
+                    })
+                    .catch(error =>{
+                        let errors = {}
+                        errors.message = error
+                        errors.status  = 400
+                        reject(errors)
+                    })
+                })
+                .catch(error =>{
+                    let errors = {}
+                    errors.message = error
+                    errors.status  = 400
+                    reject(errors)   
+                })
+
+                )
+
+    })
+}
 
 }

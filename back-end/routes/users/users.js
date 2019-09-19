@@ -31,5 +31,15 @@ router.get('/api/profile/:id', function(req,res){
                   res.status(error.status).json(error)
                 })
 })
+
+router.post('/api/follow/:followerid/:followedid', function(req,res){
+    userController.follow(req.params.followerid, req.params.followedid)
+    .then(user => {
+        res.json(user)
+      })
+      .catch(error => {
+        res.status(error.status).json(error)
+      })
+})
   
 module.exports = router;
