@@ -12,14 +12,14 @@ var usersRouter     = require('./routes/users/users');
 var adminRouter     = require('./routes/admin/admin');
 
 var flash           = require('connect-flash');
-var session         = require('express-session');
+// var session         = require('express-session');
 // var expressValidator= require('express-validator');
 
-var MongoStore      = require('connect-mongo')(session);
+// var MongoStore      = require('connect-mongo')(session);
 
 require('dotenv').config();
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true})
+mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true})
     .then( ()=>{
         console.log('MONGODB CONNECTED')
     })
@@ -31,26 +31,27 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(flash());
+app.use(passport.initialize());
+require('./passport/passport') (passport);
+// app.use(passport.session());
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-    resave: true,
-    saveUninitialized: true,
-    secret: process.env.SESSION_SECRET,
-    store: new MongoStore({ url: process.env.MONGODB_URI, autoReconnect: true}),
-    cookie: {
-        secure: false,
-        maxAge: 365 * 24 * 60 * 60 * 1000
-    }
-}));
-
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(session({
+//     resave: true,
+//     saveUninitialized: true,
+//     secret: process.env.SESSION_SECRET,
+//     store: new MongoStore({ url: process.env.MONGODB_URI, autoReconnect: true}),
+//     cookie: {
+//         secure: false,
+//         maxAge: 365 * 24 * 60 * 60 * 1000
+//     }
+// }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

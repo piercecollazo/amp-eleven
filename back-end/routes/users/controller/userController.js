@@ -1,16 +1,27 @@
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
-    signupAndSignIn: (params) => {
-        console.log(params)
-        return new Promise((resolve, reject) => {
+
+    signup: (params) => {
+
+        return new Promise ((resolve, reject) => {
 
             User.findOne({email: params.email})
-                .then( user => {
-                    if (!user) {
+                .then(user => {
 
-                        const newUser = new User({ 
+                    if(user) {
+
+                        let errorObj = {};
+                        errorObj.status = 409;
+                        errorObj.confirmation = false;
+                        errorObj.message = `User already Exist! Please choose another name`;
+                        reject(errorObj);
+
+                    } else {
+
+                        const newUser = new User({
                                             email: params.email,
                                             username: params.username, 
                                             password: params.password,
@@ -19,109 +30,116 @@ module.exports = {
                                             followers: params.followers,
                                             events: params.events,
                                             verified: params.verified
+                                                });
 
-                                        })
-                        bcrypt.genSalt(10, (err, salt) => {
-
-                            bcrypt.hash(newUser.password, salt, (err, hash) => {
-                                if (err) 
-                                    throw err;
-                                newUser.password = hash;
-                                // resolved user save
-                                newUser.save()
-                                       .then( user => {
-                                        //    added a payload to sign tokens with to stop returning null tokens
-                                        const payload = {
-                                            id: user._id,
-                                            email: user.email
-                                        }
-
-                                        jwt.sign(payload, process.env.SECRET_KEY, {
-                                            expiresIn: 3600
-                                        }, (err, token) => {
-                                            if (err) {
-                                                reject(err)
-                                            } else {
-                                                let success = {}
-                                                success.confirmation = true;
-                                                success.token = `Bear ${token}`
-                                                resolve(success);
-                                            }
-                                        })
-                                       })
-                                       .catch(error => {
-
-                                            let errorObj = {}
-                                            errorObj.status = 400;
-                                            errorObj.message = error;
-                                            reject(errorObj)
+                    bcrypt.genSalt(10, (err, salt) => {
                     
-                                       });
-                            })
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
 
-                        });              
+                            if (err) {
+                                reject(err);
+                                } else {
+                                newUser.password = hash;
+                                
+                                newUser.save()
+                                    .then ( user => {
 
-                    } else {
-                        
-
-                        bcrypt
-                            .compare(params.password, user.password)
-                            .then( isMatch => {
-                                // corrected isMatch condition for if statementline 68
-                                // Added token signature line 73
-                                if (isMatch) {
                                     const payload = {
-                                        id: user._id, 
-                                        email: user.email
+                                        id: user._id,
+                                        email: user.email,
+                                        username: user.username
                                     }
 
+                                jwt.sign(payload, process.env.SECRET_KEY, {
+                                    expiresIn: 3600
+                                }, (err, token) => {
+                                    if (err) {
+                                        reject(err);
+                                    } else {
+                                        let success = {};
+                                        success.confirmation = true;
+                                        success.token = `Bearer ${token}`;
+                                        resolve(success);
+                                    }
+
+                                    })
+
+                                })
+                                .catch( error => {
+                                    reject(error);
+                                })
+                                }
+                                
+                            })
+                            });
+                        }
+                    })
+                    .catch( error => {
+                        reject(error);
+                    })
+        });
+    },
+
+    signin: (params) => {
+        
+        const email = params.email;
+        const password = params.password;
+
+        return new Promise((resolve, reject) => {
+
+            User.findOne({ email })
+                .then(user => {
+                    
+                    if(!user) {
+                        let errors = {}
+                        errors.email = 'User not found! Please sign up';
+                        errors.status = 400;
+                        reject(errors)
+                    } else {
+
+                        bcrypt.compare(password, user.password)
+                            .then( isMatch => {
+
+                                if (isMatch) {
+                                    const payload = {
+                                        id: user._id,
+                                        email: user.email,
+                                        username: user.username
+                                    }
+                                    
                                     jwt.sign(payload, process.env.SECRET_KEY, {
                                         expiresIn: 3600
                                     }, (err, token) => {
-                                        if (err) {
+                                        
+                                        if(err) {
                                             reject(err)
                                         } else {
                                             let success = {};
-                                            success.token = `Bearer ${token}`
-                                            resolve(success)
+                                            success.confirmation = true;
+                                            success.token = `Bearer ${token}`;
+                                            resolve(success);             
                                         }
-                                    })
-    
+
+                                    });
                                 } else {
-                                    let errorObj = {}
-                                    errorObj.status = 401;
-                                    errorObj.message = 'Check your username and password';
-                                    reject(errorObj)
+                                    let errors ={};
+                                    errors.message = 'username not found or check your password!';
+                                    errors.status = 400;
+                                    reject(errors);
                                 }
 
-                              
-
                             })
-                            .catch( error => {
-                                let errorObj = {}
-                                errorObj.status = 400;
-                                errorObj.message = error;
-                                reject(errorObj)
+                            .catch (error => {
+                                reject(error);
                             })
-
-
-
                     }
                 })
-                .catch(error => {
-
-                    let errorObj = {}
-                    errorObj.status = 400;
-                    errorObj.message = error;
-                    reject(errorObj)
-
+                .catch( error => {
+                    reject(error)
                 })
-
-
-
-        })
-
+        });
     },
+
     getUser: (id)=>{
         return new Promise((resolve, reject)=> {
             User.findOne({_id: id})
@@ -137,10 +155,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             User.findOne({_id: user1})
                 .then(user =>{
-            
-                    user.follows.push({
-                      id: following
-                    })
+                if (user.follows.includes(following) === false){
+                    user.follows.push(following)
                     user.save()
                     .then(user => {
                         resolve(user)
@@ -151,7 +167,14 @@ module.exports = {
                         errors.status  = 400
                         reject(errors)
                     })
-                })
+                }
+                else {
+                    let errors ={};
+                                    errors.message = 'You are already following user';
+                                    errors.status = 400;
+                                    reject(errors);
+                }
+            })
                 .catch(error =>{
                     let errors = {}
                     errors.message = error
@@ -161,9 +184,8 @@ module.exports = {
                 .then(
             User.findOne({_id: following})
                 .then(user =>{
-                    user.followers.push({
-                      id: user1
-                    })
+                    if (user.followers.includes(user1) === false ){
+                    user.followers.push(user1)
                     user.save()
                     .then(user => {
                         resolve(user)
@@ -174,6 +196,11 @@ module.exports = {
                         errors.status  = 400
                         reject(errors)
                     })
+                } else {
+                    let errors ={};
+                                    errors.status = 400;
+                                    reject(errors);
+                }
                 })
                 .catch(error =>{
                     let errors = {}
@@ -185,6 +212,39 @@ module.exports = {
                 )
 
     })
+},
+
+unfollow: (following, user1)=> {
+    return new Promise((resolve, reject) => {
+        User.findOne({_id: user1})
+            .then(user =>{
+            if (user.follows.includes(following) === false){
+                user.follows.push(following)
+                user.save()
+                .then(user => {
+                    resolve(user)
+                })
+                .catch(error =>{
+                    let errors = {}
+                    errors.message = error
+                    errors.status  = 400
+                    reject(errors)
+                })
+            }
+            else {
+                let errors ={};
+                                errors.message = 'You are already following user';
+                                errors.status = 400;
+                                reject(errors);
+            }
+        })
+            .catch(error =>{
+                let errors = {}
+                errors.message = error
+                errors.status  = 400
+                reject(errors)   
+            })
+        })
 }
 
 }
