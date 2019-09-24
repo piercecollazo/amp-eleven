@@ -31,18 +31,20 @@ export default class App extends Component {
 
   signIn = (userInfo) => {
 
+
     apiSignIn(userInfo)
     .then( user => {
       this.setState({
         user: user.email,
         isAuth: true
       }, () => {
+        console.log(this.state)
         return <Redirect to='/' />
       })
 
     })
     .catch( error => {
-      console.log('Your login credentials are incorrect')
+      console.log('Your login credentials are incorrect', error)
     })
 
   }

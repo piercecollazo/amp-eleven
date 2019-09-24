@@ -6,7 +6,7 @@ export default class Home extends Component {
     render() {
         return (
             <div>
-                <video autoplay='autoplay' muted='muted' loop='loop' id="backgroundVideo">    
+                <video autoPlay='autoplay' muted='muted' loop='loop' id="backgroundVideo">    
                     <source src={BackgroundVideo} type="video/mp4" />
                 </video>
                     <header className="masthead">

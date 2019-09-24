@@ -81,13 +81,13 @@ module.exports = {
     },
 
     signin: (params) => {
-        
+        console.log(params)
         const email = params.email;
         const password = params.password;
 
         return new Promise((resolve, reject) => {
 
-            User.findOne({ email })
+            User.findOne({ email: email })
                 .then(user => {
                     
                     if(!user) {

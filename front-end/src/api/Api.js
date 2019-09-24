@@ -1,14 +1,15 @@
-import {Axios} from 'axios'
+import {Axios} from './Axios'
 import jwt_decode from 'jwt-decode'
 
-export const apiSignIn = ({email, password, remember}) => {
+export const apiSignIn = ({email, pass, remember}) => {
+    console.log(email, pass)
     return new Promise((resolve, reject) => {
       Axios.post('/users/api/sign-in', {
-        email,
-        password
+        email: email,
+        password: pass
       })
       .then( results => {
-  
+        console.log(results)
         const  { token } = results.data;
         
         localStorage.setItem('jwtToken', token);

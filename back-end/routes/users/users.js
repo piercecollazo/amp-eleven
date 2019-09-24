@@ -22,11 +22,16 @@ router.post('/api/sign-up', function(req, res) {
 
 router.post('/api/sign-in', function(req, res) {
     console.log(req.body)
+    console.log('-----')
     userController.signin(req.body)
     .then( user => {
+      console.log('---')
+      console.log(user)
         res.json(user);
     })
     .catch( error => {
+        console.log('2222')
+        console.log(error)
         res.status(error.status).json(error);
     })
 });
