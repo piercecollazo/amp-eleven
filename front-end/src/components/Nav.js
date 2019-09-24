@@ -21,7 +21,34 @@ export default class Nav extends Component {
         }
     }
 
-    
+
+    stateUpdate = (event) => {
+        event.preventDefault()
+
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    rememberUser = (event) =>{
+        event.preventDefault()
+
+        if(!this.state.remember){
+            this.setState({
+                remember: true
+            })
+        } else {
+            this.setState({
+                remember: false
+            })
+        }
+    }
+
+    handleSubmit = (event)=>{
+        event.preventDefault()
+
+        this.context.signIn(this.state)
+    }
 
     render (){
         const { isAuth, user, logout, signIn } = this.context
@@ -55,19 +82,21 @@ export default class Nav extends Component {
                               
                               <li className="nav-item mx-0 mx-lg-1">
                                 <i className="material-icons" data-toggle='dropdown'>person</i>
+                                {!this.context.isAuth ? 
+
                                 <div className="dropdown-menu justify-content-end">
-                                    <form className="px-4 py-3" onSubmit={()=>{signIn()}}>
+                                    <form className="px-4 py-3" onSubmit={()=>{this.handleSubmit()}}>
                                       <div className="form-group">
                                         <label for="exampleDropdownFormEmail1">Email address</label>
-                                        <input type="email" class="form-control"                            id="exampleDropdownFormEmail1" placeholder="email@example.com" />
+                                        <input type="email" className="form-control"                            id="exampleDropdownFormEmail1" placeholder="email@example.com" name='email' onChange={this.stateUpdate()} />
                                       </div>
                                       <div className="form-group">
                                         <label for="exampleDropdownFormPassword1">Password</label>
-                                        <input type="password" class="form-control"                             id="exampleDropdownFormPassword1" placeholder="Password" />
+                                        <input type="password" className="form-control"                             id="exampleDropdownFormPassword1" placeholder="Password" name='pass' onChange={this.stateUpdate()} />
                                       </div>
                                       <div className="form-check">
                                         <input type="checkbox" class="form-check-input" id="dropdownCheck" />
-                                        <label className="form-check-label" for="dropdownCheck">
+                                        <label className="form-check-label" for="dropdownCheck" name='remember' onClick={this.rememberUser()}>
                                           Remember me
                                         </label>
                                       </div>
@@ -77,6 +106,15 @@ export default class Nav extends Component {
                                       <Link className="dropdown-item" to="/">New around here? Sign up</Link>
                                       <Link className="dropdown-item" to="/">Forgot password?</Link>
                                     </div>
+                            : 
+                            <div class="dropdown-menu">
+                            <Link class="dropdown-item" to="/">Account</Link>
+                            <Link class="dropdown-item" to="/">Profile</Link>
+                            <Link class="dropdown-item" to="/">Something else here</Link>
+                            <div class="dropdown-divider"></div>
+                            <Link class="dropdown-item" to="/" onClick={()=>{this.context.logout()}}>Logout</Link>
+                            </div>
+                            }
                               </li>
                               
                             </ul>

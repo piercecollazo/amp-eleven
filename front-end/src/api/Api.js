@@ -1,7 +1,7 @@
 import {Axios} from 'axios'
 import jwt_decode from 'jwt-decode'
 
-export const apiAuth = ({email, password}) => {
+export const apiSignIn = ({email, password, remember}) => {
     return new Promise((resolve, reject) => {
       Axios.post('/users/api/sign-in', {
         email,

@@ -3,6 +3,7 @@ import './App.css'
 import Navigation from './components/Nav'
 import Home from './components/Home'
 import Context from './context/Context';
+import {apiSignIn} from './api/Api'
 
 import {Redirect} from 'react-router-dom'
 
@@ -28,20 +29,32 @@ export default class App extends Component {
     })
   }
 
-  signIn = (event)=>{
-    this.setState({
-      email: event.email,
-      password: event.password,
-      remember: event.remember
+  signIn = (userInfo) => {
+
+    apiSignIn(userInfo)
+    .then( user => {
+      this.setState({
+        user: user.email,
+        isAuth: true
+      }, () => {
+        return <Redirect to='/' />
+      })
+
     })
+    .catch( error => {
+      console.log('Your login credentials are incorrect')
+    })
+
   }
+
   render(){
 
     return (
       <Context.Provider
         value={{
           logout: this.logout,
-          signIn: this.signIn
+          signIn: this.signIn,
+          isAuth: this.state.isAuth
         }}
       >
          <div className="App">
