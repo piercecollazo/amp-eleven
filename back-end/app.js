@@ -3,16 +3,15 @@ var express         = require('express');
 var path            = require('path');
 var cookieParser    = require('cookie-parser');
 var logger          = require('morgan');
-
 var mongoose        = require('mongoose');
 var passport        = require('passport')
 
 var indexRouter     = require('./routes/index');
 var usersRouter     = require('./routes/users/users');
 var adminRouter     = require('./routes/admin/admin');
+var eventRouter    = require('./routes/event/event');
 
 var flash           = require('connect-flash');
-// var session         = require('express-session');
 // var expressValidator= require('express-validator');
 
 // var MongoStore      = require('connect-mongo')(session);
@@ -42,20 +41,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(session({
-//     resave: true,
-//     saveUninitialized: true,
-//     secret: process.env.SESSION_SECRET,
-//     store: new MongoStore({ url: process.env.MONGODB_URI, autoReconnect: true}),
-//     cookie: {
-//         secure: false,
-//         maxAge: 365 * 24 * 60 * 60 * 1000
-//     }
-// }));
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
+app.use('/event', eventRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
