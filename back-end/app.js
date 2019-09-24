@@ -13,11 +13,12 @@ var eventRouter     = require('./routes/event/event');
 var cartRouter      = require('./routes/cart/cart');
 
 var flash           = require('connect-flash');
+
 // var expressValidator= require('express-validator');
 
-// var cartMiddleware  = require();
+var cartMiddleware  = require('./routes/cart/utils/cartMiddleware');
 
-// var MongoStore      = require('connect-mongo')(session);
+var Category        = require('./routes/event/models/Category');
 
 require('dotenv').config();
 
@@ -42,6 +43,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Make user object available for EJS Files/Administrator/Categories
+app.use(function(req, res, next) {
+    res.locals.user         = req.user;
+
+    res.locals.error        = req.flash("error");
+    res.locals.error_msg    = req.flash("error_msg");
+    res.locals.success_msg  = req.flash("success_msg");
+
+    next();
+})
+
+app.use(function (req, res, next){
+    Category.find({})
+        .then( categories =>{
+
+            res.locals.categories = categories
+            
+            next()
+        })
+        .catch( error => {
+            return next(error)
+        })
+})
+
+app.use(cartMiddleware);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

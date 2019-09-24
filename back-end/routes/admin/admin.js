@@ -5,4 +5,7 @@ router.get('/', function (req, res) {
     res.send('Admin Worked')
 })
 
+//Add-category
+
+
 module.exports = router
