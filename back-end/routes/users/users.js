@@ -11,10 +11,11 @@ router.get('/', passport.authenticate('jwt', { session: false }), function(req, 
 });
 
 router.post('/api/sign-up', function(req, res) {
-    console.log(req.body)
+    console.log('sign up attempt made')
     userController.signup(req.body)
                     .then( user => {
                         res.json(user);
+                        console.log('sign up of user successful')
                     })
                     .catch ( error => {
                         res.status(error.status).json(error);
