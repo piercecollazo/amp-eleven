@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 
 var userController = require('./controller/userController');
+var cartController = require('../cart/controllers/cartController');
 
 /* GET users listing. */
 router.get('/', passport.authenticate('jwt', { session: false }), function(req, res, next) {
