@@ -1,22 +1,11 @@
-const User = require('/Users/codeimmersives/Desktop/current-app/amp-eleven/back-end/routes/users/model/User.js');
 const Cart = require('../models/Cart');
 
 
 module.exports = {
     createUserCart: (req, res) => {
         let cart = new Cart()
-        console.log(req.body.email)
-
-        User.findOne({email: req.body.email})
-                .then(user => {
-
-                    if(user) {
-
-                        console.log(user)
-                    }
-                })
-
-        cart.owner = user
+        
+        cart.owner = req.user.user_id
 
         cart.save((error) => {
             if (error) {
