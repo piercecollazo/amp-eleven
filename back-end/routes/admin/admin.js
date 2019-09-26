@@ -24,12 +24,12 @@ router.post('/add-category', categoryValidation, function (req, res) {
                 .then(category => {
                     // req.flash('addCategorySuccess', `Added ${ category.name }!`)
 
-                    res.redirect('/add-category')
+                    res.redirect('/admin/add-category')
                 })
                 .catch(error => {
                     // req.flash('addCategoryError', error.message)
 
-                    res.redirect('/add-category')
+                    res.redirect('/admin/add-category')
                 })
 })
 
