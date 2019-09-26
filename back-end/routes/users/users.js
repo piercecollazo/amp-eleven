@@ -21,6 +21,13 @@ router.post('/api/sign-up', function(req, res) {
         .catch ( error => {
             res.status(error.status).json(error);
         })
+                    .then( user => {
+                        res.json(user);
+                        console.log('sign up of user successful')
+                    })
+                    .catch ( error => {
+                        res.status(error.status).json(error);
+                    })
 });
 
 router.post('/api/sign-in', function(req, res) {
