@@ -8,6 +8,9 @@ import {Route, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom
 import Home from './components/Home'
 import SignUp from './components/SignUp'
 import NotFound from './components/NotFound'
+import Profile from './components/Profile'
+import About from './components/About'
+import EventPage from './components/EventPage'
 
 export default class App extends Component {
 
@@ -18,6 +21,18 @@ export default class App extends Component {
       isAuth: false,
       user: null
     }
+  }
+
+  fillFollowerList = () => {
+    return this.context.user.follows.map((item)=>{
+      return <li key={this.context.user._id} className="followers">
+              {this.context.user.username}
+            </li>
+    })
+    }
+  
+  fillFollowsList = () => {
+    return (<li key={this.context.user._id} className="follows"></li>)
   }
 
   logout = () => {
@@ -37,7 +52,7 @@ export default class App extends Component {
     apiSignIn(userInfo)
             .then( user => {
               this.setState({
-                user: user.email,
+                user: user,
                 isAuth: true
               }, () => {
                 console.log(this.state)
@@ -54,14 +69,16 @@ export default class App extends Component {
   signUp = (userInfo)=>{
     if(userInfo.passConfirm === userInfo.pass){
       apiSignUp(userInfo)
-              .then( user => {
+              .then( (user) => {
+                console.log(user._id)
               this.setState({
                 user: user.email,
                 isAuth: true
               }, () => {
-                console.log(this.state)
+                console.log('secondary function firing')
                 return <Redirect to='/' />
-              })
+              }
+              )
 
               })
               .catch( error => {
@@ -79,18 +96,20 @@ export default class App extends Component {
           logout: this.logout,
           signIn: this.signIn,
           isAuth: this.state.isAuth,
-          signUp: this.signUp
+          signUp: this.signUp,
+          user: this.state.user,
+          fillFollowsList: this.fillFollowsList,
+          fillFollowerList: this.fillFollowerList
         }}
       >
         <Router>
-
-         <div className="App">
-          <Navigation />
-        </div>
-
+        <Navigation />
         <Switch>
           <Route exact path='/' render={(props) => <Home {...props}/>} />
           <Route path="/signup" render={(props) => <SignUp  {...props} />} />
+          <Route path="/profile" render={(props) => <Profile {...props} />} />
+          <Route exact path="/About" render={(props) => <About  {...props} />} />
+          <Route path="/event" render={(props) => <EventPage  {...props} />} />
           <Route component={NotFound} />
         </Switch>
         </Router>

@@ -74,7 +74,7 @@ export default class SignUp extends Component {
                             </div>
 
                             <div className="form-check">
-                                <input type="checkbox" className="form-check-input" id="dropdownCheck" />
+                                <input type="checkbox" className="form-check-input" />
                                 <label className="form-check-label" htmlFor="dropdownCheck" onClick={this.creatorCheck}>Are you a content creator?</label>
                             </div>
 

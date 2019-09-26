@@ -7,6 +7,6 @@ export default React.createContext({
     logout:()=>{},
     signUp:()=>{},
     follow:()=>{},
-    userFetch:()=>{},
-    ticketBuy:()=>{}
+    fillFollowerList:()=>{},
+    illFollowsList:()=>{}
 })

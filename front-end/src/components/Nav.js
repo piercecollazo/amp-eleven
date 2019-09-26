@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
-import { Link, Route, BrowserRouter as Router, Switch, } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Context from '../context/Context'
 
-import Home from './Home'
-import About from './About'
-import Event from './EventPage'
-import Profile from './Profile'
-import NotFound from './NotFound'
 
 export default class Nav extends Component {
     static contextType = Context
@@ -53,7 +48,7 @@ export default class Nav extends Component {
     render (){
 
         return (
-                <Router>
+  
                     <nav className="navbar navbar-expand-lg bg-secondary text-uppercase     fixed-top" id="mainNav">
                         <div className="container">
                           
@@ -109,7 +104,7 @@ export default class Nav extends Component {
                             <div className="dropdown-menu">
                             <h5>{this.context.user}</h5>
                             <Link className="dropdown-item" to="/">Account</Link>
-                            <Link className="dropdown-item" to="/">Profile</Link>
+                            <Link className="dropdown-item" to={`/profile/${this.context.user._id}`}>Profile</Link>
                             <Link className="dropdown-item" to="/">Something else here</Link>
                             <div className="dropdown-divider"></div>
                             <Link className="dropdown-item" to="/" onClick={()=>{this.context.logout()}}>Logout</Link>
@@ -122,14 +117,6 @@ export default class Nav extends Component {
                         </div>
                     </nav>
     
-                    <Switch>
-                        <Route exact path='/' component={Home} />
-                        <Route path='/profile' component={Profile} />
-                        <Route path='/About' component={About} />
-                        <Route path='/Event' component={Event} />
-                        <Route component={NotFound} />
-                    </Switch>
-                </Router>
         )
     }
 }

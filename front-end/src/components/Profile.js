@@ -1,16 +1,59 @@
-import React from 'react'
-import Jumbotron from 'react-bootstrap/Jumbotron'
-import Container from 'react-bootstrap/Container'
+import React, { Component } from 'react'
+import Context from '../context/Context'
 
-const Profile = () => (
-    <Jumbotron fluid>
-    <Container>
-      <h1>Profile Page</h1>
-      <p>
-        Profile Page under construction
-      </p>
-    </Container>
-  </Jumbotron>
-)
+import axolotl from '../Assets/images/axolotl.jpg'
+import { apiUserGet } from '../api/Api';
 
-export default Profile
+export default class Profile extends Component {
+  static contextType = Context
+
+  constructor(props){
+    super(props)
+
+    this.state={
+      follows: [],
+      followers: [],
+      posts: []
+    }
+  }
+
+  profileCatch = ()=>{
+    apiUserGet(this.context.user._id)
+              .then(userProfile => {
+                this.setState({
+                  follows: this.context.user.follows,
+                  followers: this.context.user.followers
+                })
+              },this.context.fillFollowerList(), this.context.fillFollowsList())
+              .catch(error => {
+                console.log('User call failed')
+              })
+  }
+
+  render() {
+    return (
+      <div className='container profile'>
+        <div className='row'>
+          <div className='col-lg-4'>
+            <div className='card'>
+              <img className='img-thumbnail' src={axolotl} alt='' />
+              <div className='card-body mx-auto text-center'>
+                A basic profile description
+              </div>
+              <div className='card-footer'>
+                <div className='btn btn-primary'>Follow +</div>
+              </div>
+            </div>
+          </div>
+          <div className='col-lg-4'>Test 2</div>
+          <div className='col-lg-4'>
+            <ul>
+              {/* {this.profileCatch} */}
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+    )
+  }
+}

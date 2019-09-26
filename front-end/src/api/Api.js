@@ -1,6 +1,7 @@
 import {Axios} from './Axios'
 import jwt_decode from 'jwt-decode'
 
+
 export const apiSignIn = ({email, pass, remember}) => {
     console.log(email, pass)
     return new Promise((resolve, reject) => {
@@ -9,13 +10,13 @@ export const apiSignIn = ({email, pass, remember}) => {
         password: pass
       })
       .then( results => {
-        console.log(results)
+
         const  { token } = results.data;
         
         localStorage.setItem('jwtToken', token);
   
         const decodedToken = jwt_decode(token);
-  
+        console.log(decodedToken)
         resolve(decodedToken)
       })
       .catch( error => {
@@ -47,4 +48,16 @@ export const apiSignIn = ({email, pass, remember}) => {
         reject(error);
       });
     });
+  }
+
+  export const apiUserGet = (user)=>{
+    return new Promise((resolve, reject)=>{
+      Axios.get(`users/api/profile/${user}`)
+           .then(results => {
+             resolve(results)
+           })
+           .catch(error => {
+             reject(error)
+           })
+    })
   }
