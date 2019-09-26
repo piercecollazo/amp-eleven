@@ -1,11 +1,40 @@
-var express = require('express');
-var router  = express.Router();
+let express = require('express')
+let router  = express.Router()
+
+let categoryController = require('./controller/categoryController')
+let createEventController = require('./controller/createEventController')
+let categoryValidation = require('./utils/categoryValidation')
+
+// let Event = require('../event/models/Event')
 
 router.get('/', function (req, res) {
-    res.send('Admin Worked')
+    res.render('admin/admin.ejs')
 })
 
-//Add-category
+//Add-Category
 
+router.get('/add-category', function (req, res) {
+    res.render('event/addcategory',
+     { errors:  'addCategoryError', 
+       success: 'addCategorySuccess' })
+})
+
+router.post('/add-category', categoryValidation, function (req, res) {
+    categoryController.addCategory(req.body)
+                .then(category => {
+                    // req.flash('addCategorySuccess', `Added ${ category.name }!`)
+
+                    res.redirect('/add-category')
+                })
+                .catch(error => {
+                    // req.flash('addCategoryError', error.message)
+
+                    res.redirect('/add-category')
+                })
+})
+
+router.get('/get-all-categories', categoryController.getAllCategories)
+
+router.get('/create-fake-product/:categoryName/:categoryID', createEventController.createProductByCategoryID)
 
 module.exports = router

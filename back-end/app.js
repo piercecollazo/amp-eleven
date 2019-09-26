@@ -13,9 +13,7 @@ var adminRouter     = require('./routes/admin/admin');
 var eventRouter     = require('./routes/event/event');
 var cartRouter      = require('./routes/cart/cart');
 
-// var flash           = require('connect-flash');
-
-// var expressValidator= require('express-validator');
+var expressValidator= require('express-validator');
 
 var cartMiddleware  = require('./routes/cart/utils/cartMiddleware');
 
@@ -50,10 +48,6 @@ app.use(cors())
 app.use(function(req, res, next) {
     res.locals.user         = req.user;
 
-    // res.locals.error        = req.flash("error");
-    // res.locals.error_msg    = req.flash("error_msg");
-    // res.locals.success_msg  = req.flash("success_msg");
-
     next();
 })
 
@@ -71,6 +65,24 @@ app.use(function (req, res, next){
 })
 
 app.use(cartMiddleware);
+
+app.use(expressValidator({
+    errorFormatter: function(param, message, value) {
+        let namespace   = param.split('.');
+        let root        = namespace.shift();
+        let formParam   = root;
+        
+        while (namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+
+        return {
+            param:      formParam,
+            message:    message,
+            value:      value
+        }
+    }
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
