@@ -13,7 +13,7 @@ var adminRouter     = require('./routes/admin/admin');
 var eventRouter     = require('./routes/event/event');
 var cartRouter      = require('./routes/cart/cart');
 
-var flash           = require('connect-flash');
+// var flash           = require('connect-flash');
 
 // var expressValidator= require('express-validator');
 
@@ -35,7 +35,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(flash());
+// app.use(flash());
 app.use(passport.initialize());
 require('./passport/passport') (passport);
 
@@ -50,9 +50,9 @@ app.use(cors())
 app.use(function(req, res, next) {
     res.locals.user         = req.user;
 
-    res.locals.error        = req.flash("error");
-    res.locals.error_msg    = req.flash("error_msg");
-    res.locals.success_msg  = req.flash("success_msg");
+    // res.locals.error        = req.flash("error");
+    // res.locals.error_msg    = req.flash("error_msg");
+    // res.locals.success_msg  = req.flash("success_msg");
 
     next();
 })

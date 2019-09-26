@@ -6,7 +6,7 @@ module.exports = {
 
     signup: (params) => {
 
-        return new Promise ((resolve, reject) => {
+        return new Promise((resolve, reject) => {
 
             User.findOne({email: params.email})
                 .then(user => {

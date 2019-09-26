@@ -1,10 +1,22 @@
+const User = require('/Users/codeimmersives/Desktop/current-app/amp-eleven/back-end/routes/users/model/User.js');
 const Cart = require('../models/Cart');
+
 
 module.exports = {
     createUserCart: (req, res) => {
         let cart = new Cart()
+        console.log(req.body.email)
 
-        cart.owner = req.user._id
+        User.findOne({email: req.body.email})
+                .then(user => {
+
+                    if(user) {
+
+                        console.log(user)
+                    }
+                })
+
+        cart.owner = user
 
         cart.save((error) => {
             if (error) {
@@ -17,7 +29,8 @@ module.exports = {
             }
         })
     },
-    addProductToCart: (req, res) => {
+
+    addEventToCart: (req, res) => {
         Cart.findOne({ owner: req.user._id})
             .then( cart => {
                 cart.items.push({
@@ -55,7 +68,7 @@ module.exports = {
             .then( cart => {
                 res.render('cart/cart', {
                     foundCart: cart,
-                    message: req.flash('remove')
+                    // message: req.flash('remove')
                 })
             })
             .catch( error => {
@@ -75,7 +88,7 @@ module.exports = {
 
                 cart.save()
                 .then( cart => {
-                    req.flash('remove', 'Successfully removed')
+                    // req.flash('remove', 'Successfully removed')
 
                     res.redirect('/api/cart')
                 })
