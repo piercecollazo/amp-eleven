@@ -4,6 +4,7 @@ var passport = require('passport');
 
 var userController = require('./controller/userController');
 // var cartController = require('../cart/controllers/cartController');
+var signupValidation = require('./utils/signupValidation');
 
 
 /* GET users listing. */
@@ -11,7 +12,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), function(req, 
   res.send('Users Home');
 });
 
-router.post('/api/sign-up', function(req, res) {
+router.post('/api/sign-up', signupValidation, function(req, res) {
     console.log('sign up attempt made')
     userController.signup(req.body)
         .then( user=> {
