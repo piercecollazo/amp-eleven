@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
                 if (cart) {
                     let total = 0;
 
-                    for (let item of cart.items) otal += item.quantity
+                    for (let item of cart.items) total += item.quantity
 
                     res.locals.cart = total;
 

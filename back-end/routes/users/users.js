@@ -3,7 +3,6 @@ var router = express.Router();
 var passport = require('passport');
 
 var userController = require('./controller/userController');
-// var cartController = require('../cart/controllers/cartController');
 var signupValidation = require('./utils/signupValidation');
 
 
@@ -12,6 +11,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), function(req, 
   res.send('Users Home');
 });
 
+/* Sign-up */
 
 router.post('/api/sign-up', signupValidation, function(req, res) {
     console.log('sign up attempt made')
@@ -32,6 +32,8 @@ router.post('/api/sign-up', signupValidation, function(req, res) {
                     })
 });
 
+/* Sign-in */
+
 router.post('/api/sign-in', function(req, res) {
     userController.signin(req.body)
     .then( user => {
@@ -42,6 +44,8 @@ router.post('/api/sign-in', function(req, res) {
         res.status(error.status).json(error);
     })
 });
+
+/* Get User */
 
 router.get('/api/profile/:id', function(req,res){
   // params are a placeholder for manual id fetching in postman
@@ -54,6 +58,8 @@ router.get('/api/profile/:id', function(req,res){
                 })
 })
 
+/* Follow */
+
 router.post('/api/follow/:followerid/:followedid', function(req,res){
     userController.follow(req.params.followerid, req.params.followedid)
     .then(user => {
@@ -62,6 +68,24 @@ router.post('/api/follow/:followerid/:followedid', function(req,res){
       .catch(error => {
         res.status(error.status).json(error)
       })
+})
+
+/* Unfollow */
+
+/* Update Profile */
+
+router.post('/edit-profile', function (req, res) {
+    userController.updateProfile(req.body, req.user._id)
+                    .then(user => {
+                        // req.flash('success', 'Successfully updated profile!')
+
+                        res.redirect('/api/users/edit-profile')
+                    })
+                    .catch(error => {
+                        // req.flash('errors', error)
+
+                        res.redirect('/api/users/edit-profile')
+                    })
 })
   
 module.exports = router;

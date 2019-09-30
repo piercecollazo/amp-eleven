@@ -1,21 +1,21 @@
-let Product = require('../../event/models/Event')
+let Event = require('../../event/models/Event')
 // let faker   = require('faker')
 
 module.exports = {
-    createProductByCategoryID: (req, res) => {
-        for (let i = 0; i < 10; i++) {
-            let newProduct = new Product()
+    createEventByCategoryID: (req, res) => {
+        
+            let newEvent = new Event()
     
-            newProduct.category = req.params.categoryID
-            newProduct.name     = faker.commerce.productName()
-            newProduct.price    = faker.commerce.price()
-            newProduct.image    = faker.image.image()
+            newEvent.category = req.params.categoryID
+            newEvent.name     = req.params.name
+            newEvent.price    = req.params.price
+            newEvent.image    = req.params.image
     
-            newProduct.save()
-        }
+            newEvent.save()
+       
 
-        req.flash('createProductsSuccess', `Fake ${ req.params.categoryName } 10 products created!`)
+        // req.flash('createProductsSuccess', `Fake ${ req.params.categoryName } 10 products created!`)
 
-        res.redirect('/admin/get-all-categories')
+        // res.redirect('/admin/get-all-categories')
     }
 }

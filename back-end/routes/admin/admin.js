@@ -5,7 +5,7 @@ let categoryController = require('./controller/categoryController')
 let createEventController = require('./controller/createEventController')
 let categoryValidation = require('./utils/categoryValidation')
 
-// let Event = require('../event/models/Event')
+let Event = require('../event/models/Event')
 
 router.get('/', function (req, res) {
     res.render('admin/admin.ejs')
@@ -35,6 +35,6 @@ router.post('/add-category', categoryValidation, function (req, res) {
 
 router.get('/get-all-categories', categoryController.getAllCategories)
 
-router.get('/create-fake-product/:categoryName/:categoryID', createEventController.createProductByCategoryID)
+router.post('/create-event/:categoryName/:categoryID', createEventController.createEventByCategoryID)
 
 module.exports = router
