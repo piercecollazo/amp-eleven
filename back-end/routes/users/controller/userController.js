@@ -106,7 +106,12 @@ module.exports = {
                                     const payload = {
                                         id: user._id,
                                         email: user.email,
-                                        username: user.username
+                                        username: user.username,
+                                        creator: user.creator,
+                                        follows: user.follows,
+                                        followers: user.followers,
+                                        verified: user.verified,
+                                        events: user.events
                                     }
                                     
                                     jwt.sign(payload, process.env.SECRET_KEY, {

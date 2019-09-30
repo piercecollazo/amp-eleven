@@ -20,7 +20,9 @@ export default class Profile extends Component {
     this.profileCatch()
   }
   profileCatch = ()=>{
-    apiUserGet(this.context.user._id)
+    console.log('Next line is profileCatch')
+    console.log(this.context)
+    apiUserGet(this.context.user.id)
 
               .then(userProfile => {
                 console.log('profileCatch function ' + userProfile)

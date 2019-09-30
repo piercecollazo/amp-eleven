@@ -24,15 +24,19 @@ export default class App extends Component {
   }
 
   fillFollowerList = () => {
-    return this.context.user.follows.map((item)=>{
-      return <li key={this.context.user._id} className="followers">
-              {this.context.user.username}
+    return this.state.user.followers.map((item)=>{
+      return <li key={item.id} className="followers">
+              {item.username}
             </li>
     })
     }
   
   fillFollowsList = () => {
-    return (<li key={this.context.user._id} className="follows"></li>)
+    return this.state.user.follows.map((item)=>{
+      return <li key={item.id} className="follows">
+              {item.username}
+            </li>
+    })
   }
 
   logout = () => {
