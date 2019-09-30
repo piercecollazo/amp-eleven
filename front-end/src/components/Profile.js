@@ -10,29 +10,28 @@ export default class Profile extends Component {
   constructor(props){
     super(props)
 
-    this.state={
-      follows: [],
-      followers: [],
-      posts: []
+    this.state = {
+      profileUser: {followers:['test']},
     }
   }
   componentWillMount(){
-    this.profileCatch()
+    let query = this.props.match.params.id
+    console.log('this query is: ' + query)
+    this.profileCatch(query)
   }
-  profileCatch = ()=>{
-    console.log('Next line is profileCatch')
-    console.log(this.context)
-    apiUserGet(this.context.user.id)
 
+  profileCatch = (id)=>{
+    console.log(id)
+    apiUserGet(id)
               .then(userProfile => {
-                console.log('profileCatch function ' + userProfile)
-                // this.setState({
-                //   follows: userProfile.follows,
-                //   followers: userProfile.followers
-                // })
-              },this.context.fillFollowerList(), this.context.fillFollowsList())
+                console.log(userProfile)
+                this.setState({
+                  profileUser: userProfile.data
+                })
+              },console.log(this.state.profileUser))
               .catch(error => {
                 console.log('User call failed')
+                console.log(error)
               })
   }
 
@@ -48,6 +47,13 @@ export default class Profile extends Component {
               </div>
               <div className='card-footer'>
                 <div className='btn btn-primary'>Follow +</div>
+                <hr></hr>
+                <h5>Followers</h5>
+                <ul>
+                  {console.log(this.state.profileUser)}
+                  {this.state.profileUser.followers.map((item)=>{
+                    return <li key={item} className="followers">{item}</li>})}
+                </ul>
               </div>
             </div>
           </div>

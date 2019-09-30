@@ -23,20 +23,29 @@ export default class App extends Component {
     }
   }
 
-  fillFollowerList = () => {
-    return this.state.user.followers.map((item)=>{
-      return <li key={item.id} className="followers">
-              {item.username}
-            </li>
-    })
+  fillFollowerList = (user) => {
+    if(user){
+      return user.map((item)=>{
+        return <li key={item.id} className="followers">
+                {item.username}
+              </li>
+      })
+    } else {
+      console.log('function outrun by component')
+    }
     }
   
-  fillFollowsList = () => {
-    return this.state.user.follows.map((item)=>{
-      return <li key={item.id} className="follows">
-              {item.username}
-            </li>
-    })
+  fillFollowsList = (user) => {
+    if(user){
+      return user.map((item)=>{
+        return <li key={item.id} className="follows">
+                {item.username}
+              </li>
+      })
+    } else {
+      console.log('function outrun by component')
+    }
+    
   }
 
   logout = () => {
@@ -111,7 +120,7 @@ export default class App extends Component {
         <Switch>
           <Route exact path='/' render={(props) => <Home {...props}/>} />
           <Route path="/signup" render={(props) => <SignUp  {...props} />} />
-          <Route path="/profile" render={(props) => <Profile {...props} />} />
+          <Route path="/profile/:id" render={(props) => <Profile {...props} />} />
           <Route exact path="/About" render={(props) => <About  {...props} />} />
           <Route path="/event" render={(props) => <EventPage  {...props} />} />
           <Route component={NotFound} />

@@ -40,8 +40,6 @@ export default class Nav extends Component {
 
     handleSubmit = (event)=>{
         event.preventDefault()
-        console.log(this.context.isAuth)
-
         this.context.signIn(this.state)
     }
 

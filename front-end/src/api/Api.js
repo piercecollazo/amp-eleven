@@ -35,7 +35,6 @@ export const apiSignIn = ({email, pass, remember}) => {
         creator: creator
       })
       .then( results => {
-        console.log(results)
         const  { token } = results.data;
         
         localStorage.setItem('jwtToken', token);
