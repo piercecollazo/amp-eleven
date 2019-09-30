@@ -33,6 +33,7 @@ router.post('/api/sign-up', function(req, res) {
 router.post('/api/sign-in', function(req, res) {
     userController.signin(req.body)
     .then( user => {
+      console.log(user)
         res.json(user);
     })
     .catch( error => {

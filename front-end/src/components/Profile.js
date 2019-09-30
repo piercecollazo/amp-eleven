@@ -16,14 +16,18 @@ export default class Profile extends Component {
       posts: []
     }
   }
-
+  componentWillMount(){
+    this.profileCatch()
+  }
   profileCatch = ()=>{
     apiUserGet(this.context.user._id)
+
               .then(userProfile => {
-                this.setState({
-                  follows: this.context.user.follows,
-                  followers: this.context.user.followers
-                })
+                console.log('profileCatch function ' + userProfile)
+                // this.setState({
+                //   follows: userProfile.follows,
+                //   followers: userProfile.followers
+                // })
               },this.context.fillFollowerList(), this.context.fillFollowsList())
               .catch(error => {
                 console.log('User call failed')
