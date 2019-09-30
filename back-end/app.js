@@ -33,7 +33,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// app.use(flash());
 app.use(passport.initialize());
 require('./passport/passport') (passport);
 
@@ -84,11 +83,11 @@ app.use(expressValidator({
     }
 }));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/admin', adminRouter);
-app.use('/event', eventRouter);
-app.use('/cart',  cartRouter);
+app.use('/',        indexRouter);
+app.use('/users',   usersRouter);
+app.use('/admin',   adminRouter);
+app.use('/event',   eventRouter);
+app.use('/cart',    cartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
