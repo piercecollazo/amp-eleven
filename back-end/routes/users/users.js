@@ -12,6 +12,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), function(req, 
   res.send('Users Home');
 });
 
+
 router.post('/api/sign-up', signupValidation, function(req, res) {
     console.log('sign up attempt made')
     userController.signup(req.body)
