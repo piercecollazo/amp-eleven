@@ -252,6 +252,58 @@ unfollow: (following, user1)=> {
                 reject(errors)   
             })
         })
+},
+
+updateProfile: function (params, id) {
+    return new Promise((resolve, reject) => {
+        User.findOne({ _id: id })
+            .then(user => {
+                if (params.name) user.profile.name = params.name
+                if (params.address)   user.address = params.address
+                if (params.email)       user.email = params.email
+                if (params.team)         user.team = params.team
+
+                if (params.password) {
+                    bcrypt.genSalt(10, (error, salt) => {
+                        bcrypt.hash(params.password, salt, (error, hash) => {
+                            if (error) {
+                                let errors = {}
+                                errors.message = error
+                                error.status   = 400
+
+                                reject(errors)
+                            } else {
+                                user.password = hash
+
+                                user.save()
+                                    .then(user => {
+                                        resolve(user)
+                                    })
+                                    .catch(error =>{
+                                        let errors = {}
+                                        errors.message = error
+                                        errors.status  = 400
+
+                                        reject(errors)
+                                    })
+                            }
+                        })
+                    })
+                } else {
+                    user.save()
+                        .then(user => {
+                            resolve(user)
+                        })
+                        .catch(error =>{
+                            let errors = {}
+                            errors.message = error
+                            errors.status  = 400
+
+                            reject(errors)
+                        })
+                }
+            })
+    })
 }
 
 }
