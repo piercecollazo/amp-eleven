@@ -1,4 +1,5 @@
-const Cart = require('../models/Cart');
+// const Cart = require('../models/Cart');
+const User = require('../../users/model/User')
 
 
 module.exports = {
@@ -19,27 +20,28 @@ module.exports = {
     //     })
     // },
 
-    addEventToCart: (req, res) => {
-        Cart.findOne({ owner: req.user._id})
-            .then( cart => {
-                cart.items.push({
+    addEventToCart: (owner) => {
+        // console.log(owner)
+        return new Promise((resolve, reject) => {
+        User.findOne({ _id: owner})
+            .then( user => {
+                user.cart.items.push({
                     item: req.body.eventID,
                     price: parseFloat(req.body.priceValue),
                     quantity: parseInt(req.body.quantity)
                 })
 
-                cart.total = (cart.total + parseFloat(req.body.priceValue)).toFixed(2)
+                user.cart.total = (user.cart.total + parseFloat(req.body.priceValue)).toFixed(2)
                 
-                cart.save()
-                    .then( cart => {
-                        res.redirect('/api/cart')
+                user.save()
+                    .then( user => {
+                        resolve(user)
                     })
                     .catch( error => {
                         let errors = {}
                         errors.status = 400
                         errors.message = error
-                        
-                        res.status(errors.status).json(errors)
+                        reject(errors)
                     })
             })
             .catch( error => {
@@ -47,15 +49,15 @@ module.exports = {
                 errors.status = 400
                 errors.message = error
                 
-                res.status(errors.status).json(errors)
             })
+        })
     },
     getUserShoppingCart: (req, res) => {
-        Cart.findOne({ owner: req.user_id})
+        User.findOne({ owner: req.user_id})
             .populate('items.item')
             .exec()
-            .then( cart => {
-                res.render('cart/cart', {
+            .then( user => {
+                res.render('user/cart', {
                     foundCart: cart,
                     // message: req.flash('remove')
                 })
@@ -69,13 +71,13 @@ module.exports = {
             })
     },
     removeEvent: (req, res) => {
-        Cart.findOne({ owner: req.user._id})
-            .then(cart => {
-                cart.items.pull(String(req.body.item))
+        User.findOne({ owner: req.user._id})
+            .then(user => {
+                user.cart.items.pull(String(req.body.item))
 
-                cart.total = (cart.total - parseFloat(req.body.price).toFixed(2))
+                user.cart.total = (user.cart.total - parseFloat(req.body.price).toFixed(2))
 
-                cart.save()
+                user.save()
                 .then( cart => {
                     // req.flash('remove', 'Successfully removed')
 

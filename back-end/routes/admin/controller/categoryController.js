@@ -24,7 +24,9 @@ module.exports = {
     getAllCategories: (req, res) => {
         Category.find({})
                 .then( categories => {
-                    res.render('category/create-fake-product', { categories: categories, success: req.flash('createProductsSuccess') })
+                    res.render('category/create-fake-product', 
+                    // { categories: categories, success: req.flash('createProductsSuccess') }
+                    )
                 })
                 .catch( error => {
                     let errors     = {}

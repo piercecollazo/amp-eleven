@@ -4,7 +4,7 @@ function categoryValidation(req, res, next) {
     let errorValidate = req.validationErrors()
 
     if (errorValidate) {
-        req.flash('addCategoryError', errorValidate[0].message)
+        // req.flash('addCategoryError', errorValidate[0].message)
         res.status(302).redirect('/admin/add-category')
     } else {
         next()

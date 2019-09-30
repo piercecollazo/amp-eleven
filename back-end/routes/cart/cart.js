@@ -12,7 +12,14 @@ let cartController = require('./controllers/cartController')
 router.get('/', cartController.getUserShoppingCart);
 
 
-router.post('/product', cartController.addEventToCart);
+router.post('/add-event/:owner', function (req,res) { cartController.addEventToCart(req.params.owner)
+    .then(user => {
+        res.json(user)
+    })
+    .catch(error => {
+        res.status(error.status).json(error)
+    })
+})
 
 router.delete('/remove', cartController.removeEvent);
 
@@ -35,22 +42,22 @@ router.post('/payment', (req, res, next) => {
             })
             .then( results => {
                 async.waterfall([
+                    // (callback) => {
+                    //     User.findOne({ 
+                    //         owner: req.user._id 
+                    //     }, (error, user) => {
+                    //         callback(error, user)
+                    //     })
+                    // },
                     (callback) => {
-                        Cart.findOne({ 
-                            owner: req.user._id 
-                        }, (error, cart) => {
-                            callback(error, cart)
-                        })
-                    },
-                    (cart, callback) => {
                         User.findOne({
                             _id: req.user._id
                         }, (error, user) => {
                             if (user) {
-                                for (let i = 0; i < cart.items.length; i++) {
+                                for (let i = 0; i < user.items.length; i++) {
                                     user.history.push({
-                                        item: cart.items[i].item,
-                                        paid: cart.items[i].price
+                                        item: user.items[i].item,
+                                        paid: user.items[i].price
                                     })
                                 }
 
@@ -63,7 +70,7 @@ router.post('/payment', (req, res, next) => {
                         })
                     },
                     (user) => {
-                        Cart.update({
+                        User.update({
                             owner: req.user._id
                         }, {
                             $set: {
@@ -71,7 +78,7 @@ router.post('/payment', (req, res, next) => {
                                 total: 0
                             }
                         }, (error, updated) => {
-                            if (updated) res.render('cart/paydone')
+                            if (updated) res.render('user/paydone')
                         })
                     }
                 ])
