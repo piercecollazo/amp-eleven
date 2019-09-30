@@ -221,38 +221,38 @@ module.exports = {
     })
 },
 
-unfollow: (following, user1)=> {
-    return new Promise((resolve, reject) => {
-        User.findOne({_id: user1})
-            .then(user =>{
-            if (user.follows.includes(following) === false){
-                user.follows.push(following)
-                user.save()
-                .then(user => {
-                    resolve(user)
-                })
-                .catch(error =>{
-                    let errors = {}
-                    errors.message = error
-                    errors.status  = 400
-                    reject(errors)
-                })
-            }
-            else {
-                let errors ={};
-                                errors.message = 'You are already following user';
-                                errors.status = 400;
-                                reject(errors);
-            }
-        })
-            .catch(error =>{
-                let errors = {}
-                errors.message = error
-                errors.status  = 400
-                reject(errors)   
-            })
-        })
-},
+// unfollow: (following, user1)=> {
+//     return new Promise((resolve, reject) => {
+//         User.findOne({_id: user1})
+//             .then(user =>{
+//             if (user.follows.includes(following) === false){
+//                 user.follows.push(following)
+//                 user.save()
+//                 .then(user => {
+//                     resolve(user)
+//                 })
+//                 .catch(error =>{
+//                     let errors = {}
+//                     errors.message = error
+//                     errors.status  = 400
+//                     reject(errors)
+//                 })
+//             }
+//             else {
+//                 let errors ={};
+//                                 errors.message = 'You are already following user';
+//                                 errors.status = 400;
+//                                 reject(errors);
+//             }
+//         })
+//             .catch(error =>{
+//                 let errors = {}
+//                 errors.message = error
+//                 errors.status  = 400
+//                 reject(errors)   
+//             })
+//         })
+// },
 
 updateProfile: function (params, id) {
     return new Promise((resolve, reject) => {

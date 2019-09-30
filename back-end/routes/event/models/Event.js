@@ -1,5 +1,5 @@
 let mongoose = require('mongoose')
-// let mongoosastic = require('mongoosastic')
+let mongoosastic = require('mongoosastic')
 
 let EventSchema = new mongoose.Schema({
         
@@ -21,15 +21,15 @@ let EventSchema = new mongoose.Schema({
 
 })
 
-// EventSchema.plugin(mongoosastic, {
-//     hosts: [
-//         "localhost:9200"
-//     ],
-//     populate: [
-//         {
-//             path:'category'
-//         }
-//     ]
-// })
+EventSchema.plugin(mongoosastic, {
+    hosts: [
+        "localhost:9200"
+    ],
+    populate: [
+        {
+            path:'category'
+        }
+    ]
+})
 
 module.exports = mongoose.model('event', EventSchema)

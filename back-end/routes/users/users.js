@@ -3,7 +3,6 @@ var router = express.Router();
 var passport = require('passport');
 
 var userController = require('./controller/userController');
-// var cartController = require('../cart/controllers/cartController');
 var signupValidation = require('./utils/signupValidation');
 
 
@@ -70,6 +69,8 @@ router.post('/api/follow/:followerid/:followedid', function(req,res){
         res.status(error.status).json(error)
       })
 })
+
+/* Unfollow */
 
 /* Update Profile */
 
