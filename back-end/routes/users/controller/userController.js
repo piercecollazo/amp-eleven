@@ -261,7 +261,6 @@ updateProfile: function (params, id) {
                 if (params.name) user.profile.name = params.name
                 if (params.address)   user.address = params.address
                 if (params.email)       user.email = params.email
-                if (params.team)         user.team = params.team
 
                 if (params.password) {
                     bcrypt.genSalt(10, (error, salt) => {
