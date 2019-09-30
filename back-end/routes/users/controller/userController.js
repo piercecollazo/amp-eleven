@@ -6,6 +6,8 @@ module.exports = {
 
     signup: (params) => {
 
+        console.log(params)
+
         return new Promise((resolve, reject) => {
 
             User.findOne({email: params.email})
@@ -23,7 +25,7 @@ module.exports = {
 
                         const newUser = new User({
                                             email: params.email,
-                                            username: params.username, 
+                                            username: params.username,
                                             password: params.password,
                                             creator: params.creator,
                                             follows: params.follows,
