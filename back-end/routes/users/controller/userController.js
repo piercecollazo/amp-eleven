@@ -23,16 +23,16 @@ module.exports = {
 
                     } else {
 
-                        const newUser = new User({
-                                            email: params.email,
-                                            username: params.username,
-                                            password: params.password,
-                                            creator: params.creator,
-                                            follows: params.follows,
-                                            followers: params.followers,
-                                            events: params.events,
-                                            verified: params.verified
-                                                });
+                        const newUser = new User
+                        
+                        newUser.email = params.email,
+                        newUser.profile.username = params.username,
+                        newUser.password = params.password,
+                        newUser.creator = params.creator,
+                        newUser.follows = params.follows,
+                        newUser.followers = params.followers,
+                        newUser.events = params.events,
+                        newUser.verified = params.verified
 
                     bcrypt.genSalt(10, (err, salt) => {
                     
