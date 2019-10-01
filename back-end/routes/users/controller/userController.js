@@ -176,10 +176,24 @@ module.exports = {
                     })
                 }
                 else {
-                    let errors ={};
-                                    errors.message = 'You are already following user';
-                                    errors.status = 400;
-                                    reject(errors);
+                    let followsIndex = user.follows.indexOf(otheruserid);
+                    // console.log(followsIndex);
+                    user.follows.splice(followsIndex, 1);
+                    user.save()
+                    .then(user => {
+                        resolve(user)
+                    })
+                    .catch(error =>{
+                        let errors = {}
+                        errors.message = error
+                        errors.status  = 400
+                        reject(errors)
+                    })
+
+                    // let errors ={};
+                    //                 errors.message = 'You are already following user';
+                    //                 errors.status = 400;
+                    //                 reject(errors);
                 }
             })
                 .catch(error =>{
@@ -204,9 +218,23 @@ module.exports = {
                         reject(errors)
                     })
                 } else {
-                    let errors ={};
-                                    errors.status = 400;
-                                    reject(errors);
+
+                    let followersIndex = user.followers.indexOf(userid);
+                    user.followers.splice(followersIndex, 1);
+                    user.save()
+                    .then(user => {
+                        resolve(user)
+                    })
+                    .catch(error =>{
+                        let errors = {}
+                        errors.message = error
+                        errors.status  = 400
+                        reject(errors)
+                    })
+
+                    // let errors ={};
+                    //                 errors.status = 400;
+                    //                 reject(errors);
                 }
                 })
                 .catch(error =>{
