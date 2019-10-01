@@ -9,7 +9,7 @@ module.exports = {
             let newEvent = new Event()
     
             newEvent.category = req.params.categoryID
-            newEvent.name     = req.params.categoryName
+            // newEvent.name     = req.params.categoryName
 
             newEvent.creator  = req.body.creator
             newEvent.event    = req.body.event

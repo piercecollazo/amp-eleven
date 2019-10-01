@@ -12,7 +12,9 @@ let cartController = require('./controllers/cartController')
 router.get('/', cartController.getUserShoppingCart);
 
 
-router.post('/add-event/:owner', function (req,res) { cartController.addEventToCart(req.params.owner)
+router.post('/add-event/:owner', function (req,res) { 
+    console.log(req)
+    cartController.addEventToCart(req)
     .then(user => {
         res.json(user)
     })

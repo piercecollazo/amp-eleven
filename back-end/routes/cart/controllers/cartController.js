@@ -20,18 +20,25 @@ module.exports = {
     //     })
     // },
 
-    addEventToCart: (owner) => {
+    addEventToCart: (req) => {
         // console.log(owner)
         return new Promise((resolve, reject) => {
-        User.findOne({ _id: owner})
+        User.findOne({ _id: req.params.owner})
             .then( user => {
+
+                console.log(user.cart.items)
+                console.log(req.body)
+
                 user.cart.items.push({
-                    item: req.body.eventID,
-                    price: parseFloat(req.body.priceValue),
-                    quantity: parseInt(req.body.quantity)
+
+                item: req.body.item,
+                quantity: parseInt(req.body.quantity),
+                price: parseFloat(req.body.price)
+                
+
                 })
 
-                user.cart.total = (user.cart.total + parseFloat(req.body.priceValue)).toFixed(2)
+                // user.cart.total = (user.cart.total + parseFloat(req.body.price)).toFixed(2)
                 
                 user.save()
                     .then( user => {
