@@ -60,8 +60,8 @@ router.get('/api/profile/:id', function(req,res){
 
 /* Follow */
 
-router.post('/api/follow/:followerid/:followedid', function(req,res){
-    userController.follow(req.params.followerid, req.params.followedid)
+router.post('/api/follow/:followerid/:userid', function(req,res){
+    userController.follow(req.params.followerid, req.params.userid)
     .then(user => {
         res.json(user)
       })
@@ -69,8 +69,6 @@ router.post('/api/follow/:followerid/:followedid', function(req,res){
         res.status(error.status).json(error)
       })
 })
-
-/* Unfollow */
 
 /* Update Profile */
 

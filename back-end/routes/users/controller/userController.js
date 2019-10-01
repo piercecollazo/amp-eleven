@@ -157,13 +157,13 @@ module.exports = {
         })
     },
 
-    follow: (following, user1)=>{
-        //follower
+    follow: (followerid, userid)=>{
+    
         return new Promise((resolve, reject) => {
-            User.findOne({_id: user1})
+            User.findOne({_id: userid})
                 .then(user =>{
-                if (user.follows.includes(following) === false){
-                    user.follows.push(following)
+                if (user.follows.includes(followerid) === false){
+                    user.follows.push(followerid)
                     user.save()
                     .then(user => {
                         resolve(user)
@@ -189,10 +189,10 @@ module.exports = {
                     reject(errors)   
                 })
                 .then(
-            User.findOne({_id: following})
+            User.findOne({_id: followerid})
                 .then(user =>{
-                    if (user.followers.includes(user1) === false ){
-                    user.followers.push(user1)
+                    if (user.followers.includes(userid) === false ){
+                    user.followers.push(userid)
                     user.save()
                     .then(user => {
                         resolve(user)
@@ -221,38 +221,6 @@ module.exports = {
     })
 },
 
-// unfollow: (following, user1)=> {
-//     return new Promise((resolve, reject) => {
-//         User.findOne({_id: user1})
-//             .then(user =>{
-//             if (user.follows.includes(following) === false){
-//                 user.follows.push(following)
-//                 user.save()
-//                 .then(user => {
-//                     resolve(user)
-//                 })
-//                 .catch(error =>{
-//                     let errors = {}
-//                     errors.message = error
-//                     errors.status  = 400
-//                     reject(errors)
-//                 })
-//             }
-//             else {
-//                 let errors ={};
-//                                 errors.message = 'You are already following user';
-//                                 errors.status = 400;
-//                                 reject(errors);
-//             }
-//         })
-//             .catch(error =>{
-//                 let errors = {}
-//                 errors.message = error
-//                 errors.status  = 400
-//                 reject(errors)   
-//             })
-//         })
-// },
 
 updateProfile: function (params, id) {
     return new Promise((resolve, reject) => {
