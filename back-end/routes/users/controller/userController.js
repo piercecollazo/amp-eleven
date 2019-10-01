@@ -1,5 +1,6 @@
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
+const gravatar = require('../utils/gravatar')
 const jwt = require('jsonwebtoken');
 
 module.exports = {
@@ -27,6 +28,7 @@ module.exports = {
                         
                         newUser.email = params.email,
                         newUser.profile.username = params.username,
+                        newUser.profile.picture = gravatar(params.email)
                         newUser.password = params.password,
                         newUser.creator = params.creator,
                         newUser.follows = params.follows,
