@@ -4,17 +4,19 @@ let Event = require('../../event/models/Event')
 module.exports = {
     createEventByCategoryID: (req, res) => {
 
-            // console.log(req.params)
+            console.log(req.body)
         
             let newEvent = new Event()
     
             newEvent.category = req.params.categoryID
-            newEvent.creator  = req.params.creator
-            newEvent.event    = req.params.event
-            newEvent.date     = req.params.date
-            newEvent.location = req.params.location
-            newEvent.venue    = req.params.venue
-            newEvent.price    = req.params.price
+            newEvent.name     = req.params.categoryName
+
+            newEvent.creator  = req.body.creator
+            newEvent.event    = req.body.event
+            newEvent.date     = req.body.date
+            newEvent.location = req.body.location
+            newEvent.venue    = req.body.venue
+            newEvent.price    = req.body.price
     
             newEvent.save()
        
