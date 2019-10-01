@@ -15,10 +15,6 @@ let EventSchema = new mongoose.Schema({
         location: {type: String, es_type: 'text', default: ''},
         venue: {type: String, es_type: 'text', deafult: ''},
         price: {type: String, es_type: 'text', default: ''}
-        // verified
-        // follow:
-        // following:
-
 })
 
 EventSchema.plugin(mongoosastic, {
