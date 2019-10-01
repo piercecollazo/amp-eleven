@@ -60,3 +60,15 @@ export const apiSignIn = ({email, pass, remember}) => {
            })
     })
   }
+
+  export const apiUserFollow = (target, user)=>{
+    return new Promise((resolve, reject)=>{
+      Axios.post(`users/api/follow/${target}/${user}`)
+           .then(results =>{
+             resolve(results)
+           })
+           .catch(error => {
+             reject(error)
+           })
+    })
+  }

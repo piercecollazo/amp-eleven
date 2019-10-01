@@ -19,7 +19,7 @@ export default class App extends Component {
 
     this.state={
       isAuth: false,
-      user: null
+      user: {id:''}
     }
   }
 

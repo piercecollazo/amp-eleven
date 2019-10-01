@@ -342,8 +342,8 @@ footer {
 }
 
 body {
-  background: #007bff;
-  background: linear-gradient(to right, #0062E6, #33AEFF);
+  background: #034b50;
+  background: linear-gradient(to center, #034b50, #056268);
 }
 
 .card-signin {
@@ -450,4 +450,14 @@ body {
 
 .profile{
   margin-top:100px;
+}
+
+.avatar{
+  width:20%;
+  height:40%;
+  border-radius: 50%
+}
+
+ul{
+  list-style:none;
 }
