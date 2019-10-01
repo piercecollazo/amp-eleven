@@ -20,8 +20,8 @@ const UserSchema = new mongoose.Schema({
     //Cart for Events:
     cart: {
     total: { type: Number, default: 0 },
-    items: [{
-        item:       { type: Schema.Types.ObjectId, ref: 'event' },
+    events: [{
+        event:       { type: Schema.Types.ObjectId, ref: 'event' },
         quantity:   { type: Number, default: 1 },
         price:      { type: Number, default: 0 }
     }]},
@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
     history: [
         {
             paid: { type: Number, default: 0 },
-            item: { type: Schema.Types.ObjectId, ref: 'event' }
+            event: { type: Schema.Types.ObjectId, ref: 'event' }
         }
     ],
 

@@ -29,16 +29,16 @@ module.exports = {
                 console.log(user.cart.items)
                 console.log(req.body)
 
-                user.cart.items.push({
+                user.cart.events.push({
 
-                item: req.body.item,
+                event: req.body.item,
                 quantity: parseInt(req.body.quantity),
                 price: parseFloat(req.body.price)
                 
 
                 })
 
-                // user.cart.total = (user.cart.total + parseFloat(req.body.price)).toFixed(2)
+                user.cart.total = (user.cart.total + parseFloat(req.body.price)).toFixed(2)
                 
                 user.save()
                     .then( user => {
