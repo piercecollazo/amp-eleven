@@ -10,7 +10,7 @@ let EventSchema = new mongoose.Schema({
             es_include_in_parent: true
         },
         creator: { type: mongoose.Schema.Types.ObjectId, ref: 'user'},
-        name: { type: String, es_type: 'text', default: ''},
+        event: { type: String, es_type: 'text', default: ''},
         date: { type: Number, es_type: 'long', default: 0 },
         location: {type: String, es_type: 'text', default: ''},
         venue: {type: String, es_type: 'text', deafult: ''},
