@@ -60,8 +60,8 @@ router.get('/api/profile/:id', function(req,res){
 
 /* Follow */
 
-router.post('/api/follow/:followerid/:userid', function(req,res){
-    userController.follow(req.params.followerid, req.params.userid)
+router.post('/api/follow/:otheruserid/:userid', function(req,res){
+    userController.follow(req.params.otheruserid, req.params.userid)
     .then(user => {
         res.json(user)
       })

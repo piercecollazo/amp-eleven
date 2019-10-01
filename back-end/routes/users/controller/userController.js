@@ -157,13 +157,13 @@ module.exports = {
         })
     },
 
-    follow: (followerid, userid)=>{
+    follow: (otheruserid, userid)=>{
     
         return new Promise((resolve, reject) => {
             User.findOne({_id: userid})
                 .then(user =>{
-                if (user.follows.includes(followerid) === false){
-                    user.follows.push(followerid)
+                if (user.follows.includes(otheruserid) === false){
+                    user.follows.push(otheruserid)
                     user.save()
                     .then(user => {
                         resolve(user)
@@ -189,7 +189,7 @@ module.exports = {
                     reject(errors)   
                 })
                 .then(
-            User.findOne({_id: followerid})
+            User.findOne({_id: otheruserid})
                 .then(user =>{
                     if (user.followers.includes(userid) === false ){
                     user.followers.push(userid)
