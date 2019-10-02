@@ -245,7 +245,7 @@ module.exports = {
 
 
 updateProfile: function (params, id) {
-    console.log(params);
+    // console.log(params);
     return new Promise((resolve, reject) => {
         User.findOne({ _id: id})
             .then(user => {
@@ -253,9 +253,9 @@ updateProfile: function (params, id) {
                 if (params.username) user.profile.username = params.username
                 if (params.email) user.email = params.email
 
-                // if (req.body.creator) user.creator = req.body.creator
+                if (params.creator) user.creator = params.creator
 
-                // if(user.creator===true && req.body.genre) user.genre = req.body.genre
+                if(params.genres) user.genres = params.genres
 
                 if (params.password) {
                     bcrypt.genSalt(10, (error, salt) => {
@@ -265,7 +265,7 @@ updateProfile: function (params, id) {
                                 errors.message = error
                                 error.status   = 400
 
-                                // reject(errors)
+                                reject(errors)
                             } else {
                                 user.password = hash
 
@@ -277,6 +277,8 @@ updateProfile: function (params, id) {
                                         let errors = {}
                                         errors.message = error
                                         errors.status  = 400
+
+                                        reject(errors)
                                     })
                             }
                         })
@@ -290,6 +292,8 @@ updateProfile: function (params, id) {
                             let errors = {}
                             errors.message = error
                             errors.status  = 400
+
+                            reject(errors)
                         })
                 }
             })
