@@ -1,4 +1,3 @@
-// const Cart = require('../models/Cart');
 const User = require('../../users/model/User')
 
 
@@ -45,10 +44,10 @@ module.exports = {
             .populate('events.event')
             .exec()
             .then( user => {
-                res.render('user/cart', {
-                    foundCart: cart,
-                    // message: req.flash('remove')
-                })
+                // res.render('user/cart', {
+                //     foundCart: cart,
+                //     message: req.flash('remove')
+                // })
             })
             .catch( error => {
                 let errors = {}

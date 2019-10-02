@@ -4,7 +4,6 @@ let router  = express.Router();
 let stripe = require('stripe')('sk_test_5zPUKi7gHghPzCEhWfDd5fQl00XivGJYfX')
 let async = require('async');
 
-// let Cart = require('./models/Cart')
 let User = require('../users/model/User')
 
 let cartController = require('./controllers/cartController')
