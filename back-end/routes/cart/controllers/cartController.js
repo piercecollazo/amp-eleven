@@ -10,8 +10,8 @@ module.exports = {
         User.findOne({ _id: req.params.owner})
             .then( user => {
 
-                console.log(user.cart.items)
-                console.log(req.body)
+                // console.log(user.cart.items)
+                // console.log(req.body)
 
                 user.cart.events.push({
 
@@ -62,13 +62,18 @@ module.exports = {
             })
     },
     removeEvent: (req, res) => {
-        User.findOne({ owner: req.user._id})
+        // console.log(req)
+        console.log(req)
+        return new Promise((resolve, reject) => {
+        User.findOne({ _id: req.params.owner})
             .then(user => {
-                user.cart.items.pull(String(req.body.item))
+                // console.log(user)
+                let eventIndex = user.cart.events.indexOf(req.body.event);
+                user.cart.events.splice(eventIndex, 1);
 
                 user.cart.total = (user.cart.total - parseFloat(req.body.price).toFixed(2))
-
                 user.save()
+                
                 .then( cart => {
                     // req.flash('remove', 'Successfully removed')
 
@@ -90,4 +95,5 @@ module.exports = {
                 res.status(errors.status).json(errors)
             })
     }
+        )}
 }
