@@ -244,16 +244,22 @@ module.exports = {
 },
 
 
-updateProfile: (req, res) => {
-
-        User.findOne({ _id: req.params.userid})
+updateProfile: function (params, id) {
+    console.log(params);
+    return new Promise((resolve, reject) => {
+        User.findOne({ _id: id})
             .then(user => {
-                console.log(req.body)
-                if (req.body.username) user.profile.username = req.body.username
-                if (req.body.email)       user.email = req.body.email
-                if (req.body.password) {
+                
+                if (params.username) user.profile.username = params.username
+                if (params.email) user.email = params.email
+
+                // if (req.body.creator) user.creator = req.body.creator
+
+                // if(user.creator===true && req.body.genre) user.genre = req.body.genre
+
+                if (params.password) {
                     bcrypt.genSalt(10, (error, salt) => {
-                        bcrypt.hash(req.body.password, salt, (error, hash) => {
+                        bcrypt.hash(params.password, salt, (error, hash) => {
                             if (error) {
                                 let errors = {}
                                 errors.message = error
@@ -287,5 +293,6 @@ updateProfile: (req, res) => {
                         })
                 }
             })
+})
 }
 }

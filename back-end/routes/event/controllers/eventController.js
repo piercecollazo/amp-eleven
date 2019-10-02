@@ -75,7 +75,7 @@ module.exports = {
             }
         },
         instantSearch: (req, res) => {
-            console.log(req)
+            // console.log(req)
             Event.search({
                 query_string: {
                     query: req.body.search_term
