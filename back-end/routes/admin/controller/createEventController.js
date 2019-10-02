@@ -19,10 +19,5 @@ module.exports = {
             newEvent.price    = req.body.price
     
             newEvent.save()
-       
-
-        // req.flash('createProductsSuccess', `Fake ${ req.params.categoryName } 10 products created!`)
-
-        // res.redirect('/admin/get-all-categories')
     }
 }

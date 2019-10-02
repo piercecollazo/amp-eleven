@@ -192,11 +192,6 @@ module.exports = {
                         errors.status  = 400
                         reject(errors)
                     })
-
-                    // let errors ={};
-                    //                 errors.message = 'You are already following user';
-                    //                 errors.status = 400;
-                    //                 reject(errors);
                 }
             })
                 .catch(error =>{
@@ -234,10 +229,6 @@ module.exports = {
                         errors.status  = 400
                         reject(errors)
                     })
-
-                    // let errors ={};
-                    //                 errors.status = 400;
-                    //                 reject(errors);
                 }
                 })
                 .catch(error =>{
@@ -280,8 +271,6 @@ updateProfile: (req, res) => {
                                         let errors = {}
                                         errors.message = error
                                         errors.status  = 400
-
-                                        // reject(errors)
                                     })
                             }
                         })
@@ -295,8 +284,6 @@ updateProfile: (req, res) => {
                             let errors = {}
                             errors.message = error
                             errors.status  = 400
-
-                            // reject(errors)
                         })
                 }
             })

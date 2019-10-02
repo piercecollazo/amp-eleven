@@ -5,13 +5,10 @@ const User = require('../../users/model/User')
 module.exports = {
 
     addEventToCart: (req) => {
-        // console.log(owner)
+        
         return new Promise((resolve, reject) => {
         User.findOne({ _id: req.params.owner})
             .then( user => {
-
-                // console.log(user.cart.items)
-                // console.log(req.body)
 
                 user.cart.events.push({
 
