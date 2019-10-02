@@ -192,11 +192,6 @@ module.exports = {
                         errors.status  = 400
                         reject(errors)
                     })
-
-                    // let errors ={};
-                    //                 errors.message = 'You are already following user';
-                    //                 errors.status = 400;
-                    //                 reject(errors);
                 }
             })
                 .catch(error =>{
@@ -234,10 +229,6 @@ module.exports = {
                         errors.status  = 400
                         reject(errors)
                     })
-
-                    // let errors ={};
-                    //                 errors.status = 400;
-                    //                 reject(errors);
                 }
                 })
                 .catch(error =>{
@@ -253,22 +244,28 @@ module.exports = {
 },
 
 
-updateProfile: (req, res) => {
-
-        User.findOne({ _id: req.params.userid})
+updateProfile: function (params, id) {
+    // console.log(params);
+    return new Promise((resolve, reject) => {
+        User.findOne({ _id: id})
             .then(user => {
-                console.log(req.body)
-                if (req.body.username) user.profile.username = req.body.username
-                if (req.body.email)       user.email = req.body.email
-                if (req.body.password) {
+                
+                if (params.username) user.profile.username = params.username
+                if (params.email) user.email = params.email
+
+                if (params.creator) user.creator = params.creator
+
+                if(params.genres) user.genres = params.genres
+
+                if (params.password) {
                     bcrypt.genSalt(10, (error, salt) => {
-                        bcrypt.hash(req.body.password, salt, (error, hash) => {
+                        bcrypt.hash(params.password, salt, (error, hash) => {
                             if (error) {
                                 let errors = {}
                                 errors.message = error
                                 error.status   = 400
 
-                                // reject(errors)
+                                reject(errors)
                             } else {
                                 user.password = hash
 
@@ -281,7 +278,7 @@ updateProfile: (req, res) => {
                                         errors.message = error
                                         errors.status  = 400
 
-                                        // reject(errors)
+                                        reject(errors)
                                     })
                             }
                         })
@@ -296,9 +293,10 @@ updateProfile: (req, res) => {
                             errors.message = error
                             errors.status  = 400
 
-                            // reject(errors)
+                            reject(errors)
                         })
                 }
             })
+})
 }
 }

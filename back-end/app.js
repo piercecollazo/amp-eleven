@@ -15,8 +15,6 @@ var cartRouter      = require('./routes/cart/cart');
 
 var expressValidator= require('express-validator');
 
-var cartMiddleware  = require('./routes/cart/utils/cartMiddleware');
-
 var Category        = require('./routes/event/models/Category');
 
 require('dotenv').config();
@@ -62,8 +60,6 @@ app.use(function (req, res, next){
             return next(error)
         })
 })
-
-app.use(cartMiddleware);
 
 app.use(expressValidator({
     errorFormatter: function(param, message, value) {

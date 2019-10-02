@@ -69,19 +69,13 @@ module.exports = {
                         res.status(errors.status).json(errors)
                     } else {
                         let data = results.hits.hits
-
                         console.log(data)
-                        
-                        // res.render('search/search-results', {
-                        //     results: data,
-                        //     query:   req.query.q
-                        // })
                     }
                 })
             }
         },
         instantSearch: (req, res) => {
-            console.log(req)
+            // console.log(req)
             Event.search({
                 query_string: {
                     query: req.body.search_term
