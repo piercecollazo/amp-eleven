@@ -59,11 +59,9 @@ module.exports = {
             })
     },
     removeEvent: (req, res) => {
-        // console.log(req)
         return new Promise((resolve, reject) => {
         User.findOne({ _id: req.params.owner})
             .then(user => {
-                // console.log(user)
                 let eventIndex = user.cart.events.indexOf(req.body.event);
                 user.cart.events.splice(eventIndex, 1);
 
