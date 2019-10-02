@@ -32,7 +32,7 @@ module.exports = {
                         })
             })
         },
-        getEventssByCategoryID: (id) => {
+        getEventsByCategoryID: (id) => {
             return new Promise((resolve, reject) => {
                 Event.find({category: id})
                         .populate('category')
@@ -69,16 +69,19 @@ module.exports = {
                         res.status(errors.status).json(errors)
                     } else {
                         let data = results.hits.hits
+
+                        console.log(data)
                         
-                        res.render('search/search-results', {
-                            results: data,
-                            query:   req.query.q
-                        })
+                        // res.render('search/search-results', {
+                        //     results: data,
+                        //     query:   req.query.q
+                        // })
                     }
                 })
             }
         },
         instantSearch: (req, res) => {
+            console.log(req)
             Event.search({
                 query_string: {
                     query: req.body.search_term

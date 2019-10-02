@@ -58,7 +58,7 @@ router.get('/geteventsbycategoryid/:id', function (req, res) {
     eventController.getEventsByCategoryID(req.params.id)
                         .then(events => {
                             res.render('event/events', {
-                                eventss: events
+                                events: events
                             })
                         })
                         .catch( error => {

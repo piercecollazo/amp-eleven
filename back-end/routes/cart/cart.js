@@ -23,7 +23,17 @@ router.post('/add-event/:owner', function (req,res) {
     })
 })
 
-router.delete('/remove', cartController.removeEvent);
+router.post('/remove/:owner', function (req,res) { 
+    // console.log(req)
+    cartController.removeEvent(req)
+    .then(user => {
+        res.json(user)
+    })
+    .catch(error => {
+        res.status(error.status).json(error)
+    })
+}) 
+   
 
 router.post('/payment', (req, res, next) => {
     let stripeToken    = req.body.stripeToken
