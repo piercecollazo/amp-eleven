@@ -63,7 +63,6 @@ module.exports = {
     },
     removeEvent: (req, res) => {
         // console.log(req)
-        console.log(req)
         return new Promise((resolve, reject) => {
         User.findOne({ _id: req.params.owner})
             .then(user => {
@@ -73,27 +72,25 @@ module.exports = {
 
                 user.cart.total = (user.cart.total - parseFloat(req.body.price).toFixed(2))
                 user.save()
-                
-                .then( cart => {
-                    // req.flash('remove', 'Successfully removed')
 
-                    res.redirect('/api/cart')
+                .then( user => {
+                    resolve(user)
                 })
                 .catch( error => {
                     let errors = {}
-                    errors.status = 500
+                    errors.status = 400
                     errors.message = error
                     
-                    res.status(erros.status).json(errors)
+                    reject(errors)
                 })
             })
             .catch( error => {
                 let errors = {}
-                errors.status = 500
+                errors.status = 400
                 errors.message = error
                 
-                res.status(errors.status).json(errors)
+                reject(errors)
             })
-    }
-        )}
+            }
+    )}
 }
