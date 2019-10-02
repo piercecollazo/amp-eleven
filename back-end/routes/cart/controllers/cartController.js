@@ -3,22 +3,6 @@ const User = require('../../users/model/User')
 
 
 module.exports = {
-    // createUserCart: (req, res) => {
-    //     let cart = new Cart()
-        
-    //     cart.owner = req.user.user_id
-
-    //     cart.save((error) => {
-    //         if (error) {
-    //             res.status(400).json({
-    //                 confirmation: 'failure',
-    //                 message: error
-    //             })
-    //         } else {
-    //             res.redirect('/')
-    //         }
-    //     })
-    // },
 
     addEventToCart: (req) => {
         // console.log(owner)
@@ -61,7 +45,7 @@ module.exports = {
     },
     getUserShoppingCart: (req, res) => {
         User.findOne({ owner: req.user_id})
-            .populate('items.item')
+            .populate('events.event')
             .exec()
             .then( user => {
                 res.render('user/cart', {

@@ -72,7 +72,7 @@ router.post('/api/follow/:otheruserid/:userid', function(req,res){
 
 /* Update Profile */
 
-router.post('/edit-profile', function (req, res) {
+router.post('/api/edit-profile', function (req, res) {
     userController.updateProfile(req.body, req.user._id)
                     .then(user => {
                         // req.flash('success', 'Successfully updated profile!')
