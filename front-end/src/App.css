@@ -476,3 +476,8 @@ ul{
 .user-control-container input{
   width:50%;
 }
+
+/* Event page CSS */
+.event-page{
+  margin-top:100px;
+}

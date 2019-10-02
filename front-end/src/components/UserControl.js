@@ -13,7 +13,8 @@ export default class UserControl extends Component {
             newPassword:'',
             newPassConfirm:'',
             oldPassConfirm:'',
-            genres:[]
+            genres:[],
+            creator: false
         }
     }
     stateUpdate = (event) => {
@@ -23,16 +24,42 @@ export default class UserControl extends Component {
         })
     }
 
+    genreUpdate = (event)=>{
+        event.preventDefault()
+        let tempArray = this.state.genres
+        tempArray.includes(event.target.name) ? 
+            tempArray.splice(tempArray.indexOf(event.target.name))
+            :
+            tempArray.push(event.target.name)
+
+        this.setState({
+            genres: tempArray
+        })
+        
+    }
+
     handleSubmit = (event)=>{
         event.preventDefault()
 
         this.context.userUpdate(this.state)
     }
 
+    creatorCheck = ()=> {
+        if(!this.state.creator){
+            this.setState({
+                creator: true
+            })
+        } else {
+            this.setState({
+                creator: false
+            })
+        }
+    }
+
     render() {
         return (
             <div className='container user-control-container'>
-                <form className='px-4 py-3'>
+                <form className='px-4 py-3' onSubmit={this.handleSubmit}>
                     <h3>User Control</h3>
                     
                     <div className='form-group'>
@@ -56,34 +83,34 @@ export default class UserControl extends Component {
                     </div>
 
                     <div className='form-check'>
-                        <input type="checkbox" className="form-check-input" />
+                        <input type="checkbox" className="form-check-input" onClick={this.creatorCheck} />
                         <label>Creator toggle</label>
                     </div>
                     <hr />
                     <label>Creator Genre</label>
                     <div className='row'>
                         <div className='col'>
-                            <div className='btn btn-primary'>Rock</div>
+                            <div className='btn btn-primary' name='rock' onClick={this.genreUpdate}>Rock</div>
                         </div>
 
                         <div className='col'>
-                            <div className='btn btn-primary'>Rap</div>
+                            <div className='btn btn-primary' name='rap' onClick={this.genreUpdate}>Rap</div>
                         </div>
 
                         <div className='col'>
-                            <div className='btn btn-primary'>Country</div>
+                            <div className='btn btn-primary' name='country' onClick={this.genreUpdate}>Country</div>
                         </div>
 
                         <div className='col'>
-                            <div className='btn btn-primary'>Pop</div>
+                            <div className='btn btn-primary' name='pop' onClick={this.genreUpdate}>Pop</div>
                         </div>
 
                         <div className='col'>
-                            <div className='btn btn-primary'>Metal</div>
+                            <div className='btn btn-primary' name='metal' onClick={this.genreUpdate}>Metal</div>
                         </div>
 
                         <div className='col'>
-                            <div className='btn btn-primary'>Synthwave</div>
+                            <div className='btn btn-primary' name='synthwave' onClick={this.genreUpdate}>Synthwave</div>
                         </div>
 
                     </div>
@@ -98,7 +125,7 @@ export default class UserControl extends Component {
                             </div>
                         </div>
 
-                        <div className='btn btn-danger'>Submit</div>
+                        <div className='btn btn-danger' type='submit'>Submit</div>
                     </div>
                 </form>
             </div>

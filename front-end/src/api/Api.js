@@ -73,7 +73,7 @@ export const apiSignIn = ({email, pass, remember}) => {
     })
   }
 
-  export const apiUserUpdate = ({email, pass, username, creator}, id)=>{
+  export const apiUserUpdate = ({email, pass, username, creator, genres}, id)=>{
     return new Promise((resolve, reject)=>{
       Axios.post(`users/api/edit-profile`,{
         email: email,
@@ -82,7 +82,8 @@ export const apiSignIn = ({email, pass, remember}) => {
           username: username,
           picture: ''
         },
-        creator: creator
+        creator: creator,
+        genres: genres
 
       })
     })

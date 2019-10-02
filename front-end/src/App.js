@@ -140,7 +140,7 @@ export default class App extends Component {
           <Route path="/signup" render={(props) => <SignUp  {...props} />} />
           <Route path="/profile/:id" render={(props) => <Profile {...props} />} />
           <Route exact path="/About" render={(props) => <About  {...props} />} />
-          <Route path="/event" render={(props) => <EventPage  {...props} />} />
+          <Route path="/event/" render={(props) => <EventPage  {...props} />} />
           <Route path="/usercontrol" render={(props)=> <UserControl {...props} />} />
           <Route component={NotFound} />
         </Switch>

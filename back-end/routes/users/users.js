@@ -72,9 +72,8 @@ router.post('/api/follow/:otheruserid/:userid', function(req,res){
 
 /* Update Profile */
 
-<<<<<<< HEAD
 router.post('/api/edit-profile', function (req, res) {
-    userController.updateProfile(req.body, req.user._id)
+    userController.updateProfile(req.body, id)
                     .then(user => {
                         res.json(user)
                     })
@@ -83,8 +82,4 @@ router.post('/api/edit-profile', function (req, res) {
                     })
 })
   
-=======
-router.post('/api/edit-profile/:userid', userController.updateProfile)
-                    
->>>>>>> 1183edd2e3953e36e89152535bde13daed2c6321
 module.exports = router;
