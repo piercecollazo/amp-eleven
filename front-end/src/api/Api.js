@@ -73,6 +73,23 @@ export const apiSignIn = ({email, pass, remember}) => {
     })
   }
 
+  export const apiUserUpdate = ({email, pass, username, creator}, id)=>{
+    return new Promise((resolve, reject)=>{
+      Axios.post(`users/api/edit-profile`,{
+        email: email,
+        password: pass,
+        profile:{
+          username: username,
+          picture: ''
+        },
+        creator: creator
+
+      })
+    })
+
+  }
+
+
 //   export const querySearch = (query)=>{
 //       return new Promise((resolve, reject)=>{
 //           Axios.get('http://localhost:9200/events/event/_search', {data: JSON.stringify(query)

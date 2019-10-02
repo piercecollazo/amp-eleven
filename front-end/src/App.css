@@ -453,11 +453,26 @@ body {
 }
 
 .avatar{
-  width:20%;
-  height:40%;
+  width:80px;
+  height:80px;
   border-radius: 50%
 }
 
 ul{
   list-style:none;
+}
+
+/* User control CSS */
+
+.user-control-container{
+  background-color:grey;
+  margin-top:100px;
+}
+
+.selected-button{
+  background-color:darkslategray;
+}
+
+.user-control-container input{
+  width:50%;
 }

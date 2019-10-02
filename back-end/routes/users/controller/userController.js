@@ -34,7 +34,8 @@ module.exports = {
                         newUser.follows = params.follows,
                         newUser.followers = params.followers,
                         newUser.events = params.events,
-                        newUser.verified = params.verified
+                        newUser.verified = params.verified,
+                        newUser.genres = params.genres
 
                     bcrypt.genSalt(10, (err, salt) => {
                     

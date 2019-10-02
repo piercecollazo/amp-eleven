@@ -101,7 +101,7 @@ export default class Nav extends Component {
                             : 
                             <div className="dropdown-menu">
                             <h5>{this.context.user.email}</h5>
-                            <Link className="dropdown-item" to="/">Account</Link>
+                            <Link className="dropdown-item" to="/usercontrol">Account</Link>
                             <Link className="dropdown-item" to={`/profile/${this.context.user.id}`}>Profile</Link>
                             <Link className="dropdown-item" to="/">Something else here</Link>
                             <div className="dropdown-divider"></div>

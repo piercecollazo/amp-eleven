@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     followers:  {type: Array, default: []},
     events:     {type: Array, default: []},
     verified:   {type: Boolean, default: false},
+    genres: {type: Array, default: []},
 
     //Profile:
     profile: {

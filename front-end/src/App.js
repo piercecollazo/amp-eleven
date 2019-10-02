@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 import Navigation from './components/Nav'
 import Context from './context/Context';
-import {apiSignIn, apiSignUp} from './api/Api'
+import {apiSignIn, apiSignUp, apiUserUpdate} from './api/Api'
 import {Route, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom'
 
 import Home from './components/Home'
@@ -11,6 +11,7 @@ import NotFound from './components/NotFound'
 import Profile from './components/Profile'
 import About from './components/About'
 import EventPage from './components/EventPage'
+import UserControl from './components/UserControl'
 
 export default class App extends Component {
 
@@ -101,6 +102,23 @@ export default class App extends Component {
 
   }
 
+  userUpdate = (userInfo)=>{
+    if(userInfo.newPassword === userInfo.newPassConfirm){
+      apiUserUpdate(userInfo, this.state.user.id)
+              .then( (user) => {
+                this.setState({
+                  user: user.email,
+                  isAuth: true
+                }
+              )
+
+              })
+              .catch( error => {
+                console.log(`Something happened, error: ${error}`)
+              })
+    }
+  }
+
   render(){
 
     return (
@@ -123,6 +141,7 @@ export default class App extends Component {
           <Route path="/profile/:id" render={(props) => <Profile {...props} />} />
           <Route exact path="/About" render={(props) => <About  {...props} />} />
           <Route path="/event" render={(props) => <EventPage  {...props} />} />
+          <Route path="/usercontrol" render={(props)=> <UserControl {...props} />} />
           <Route component={NotFound} />
         </Switch>
         </Router>
