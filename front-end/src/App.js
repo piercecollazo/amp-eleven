@@ -12,6 +12,7 @@ import Profile from './components/Profile'
 import About from './components/About'
 import EventPage from './components/EventPage'
 import UserControl from './components/UserControl'
+import LoggedHome from './components/LoggedHome'
 
 export default class App extends Component {
 
@@ -137,6 +138,7 @@ export default class App extends Component {
         <Navigation />
         <Switch>
           <Route exact path='/' render={(props) => <Home {...props}/>} />
+          <Route exact path='/test' render={(props) => <LoggedHome {...props}/>} />
           <Route path="/signup" render={(props) => <SignUp  {...props} />} />
           <Route path="/profile/:id" render={(props) => <Profile {...props} />} />
           <Route exact path="/About" render={(props) => <About  {...props} />} />

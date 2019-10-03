@@ -481,3 +481,39 @@ ul{
 .event-page{
   margin-top:100px;
 }
+
+.poster{
+  width:100%;
+  height:100%;
+}
+
+.quantity-input{
+  width:20px;
+}
+
+.address{
+  margin-top:-50px;
+}
+
+.summary{
+  margin-top:50px;
+}
+
+/* Home page when logged in CSS */
+
+.logged-home{
+  margin-top:100px;
+}
+
+.search-button{
+  height:50%;
+}
+
+.search-icon{
+  margin-top:-90%;
+}
+
+.news-img{
+  width:500px;
+  height:auto;
+}
