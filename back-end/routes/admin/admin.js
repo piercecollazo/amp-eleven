@@ -15,7 +15,7 @@ router.get('/', function (req, res) {
 
 router.get('/add-category', function (req, res) {
     res.render('event/addcategory',
-     { errors:  "'addCategoryError'", 
+     { errors:  'addCategoryError', 
        success: 'addCategorySuccess' }
     )
 })

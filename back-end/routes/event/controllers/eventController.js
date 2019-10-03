@@ -2,11 +2,13 @@ let Event = require('../models/Event')
 
 module.exports = {
     
-        getAllEvents: (params) => {
+        getAllEvents: (req, res) => {
+            // console.log(params)
             return new Promise((resolve, reject) => {
-                Event.find(params)
+                Event.find({})
                         .then(events => {
                             resolve(events)
+                            console.log(events)
                         })
                         .catch( error => {
                             let errors     = {}

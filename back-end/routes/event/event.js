@@ -42,6 +42,9 @@ router.get('/search', eventController.searchEventByQuery)
 
 router.post('/instant-search', eventController.instantSearch)
 
+router.get('/all-events', 
+    eventController.getAllEvents)
+
 router.get('/:id', function (req, res) {
     eventController.getEventByID(req.params.id)
                         .then( event => {
