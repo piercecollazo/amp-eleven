@@ -15,7 +15,7 @@ router.get('/', function (req, res) {
 
 router.get('/add-category', function (req, res) {
     res.render('event/addcategory',
-     { errors:  'addCategoryError', 
+     { errors:  "'addCategoryError'", 
        success: 'addCategorySuccess' }
     )
 })
@@ -23,19 +23,26 @@ router.get('/add-category', function (req, res) {
 router.post('/add-category', categoryValidation, function (req, res) {
     categoryController.addCategory(req.body)
                 .then(category => {
-                    // req.flash('addCategorySuccess', `Added ${ category.name }!`)
-
-                    res.redirect('/admin/add-category')
+                    res.json(category)
+                    console.log('Category succesfully created')
                 })
                 .catch(error => {
-                    // req.flash('addCategoryError', error.message)
-
-                    res.redirect('/admin/add-category')
+                    res.status(error.status).json(error)
                 })
+                    
 })
 
 router.get('/get-all-categories', categoryController.getAllCategories)
 
-router.post('/create-event/:categoryName/:categoryID', createEventController.createEventByCategoryID)
+router.post('/create-event/:categoryName/:categoryID', function (req, res){
+    createEventController.createEventByCategoryID(req)
+    .then(newEvent=> {
+        res.json(newEvent)
+        console.log('New event created')
+    })
+    .catch(error => {
+        res.status(errors.status.json(error))
+    })
+})
 
 module.exports = router
