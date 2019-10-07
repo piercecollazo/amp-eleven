@@ -6,7 +6,7 @@ module.exports = {
         return new Promise((resolve, reject) =>{
             // console.log(params)
         
-            let newEvent = new Event()
+            let newEvent = new Event
     
             newEvent.category = params.params.categoryID
             // newEvent.name     = req.params.categoryName
@@ -21,6 +21,7 @@ module.exports = {
     
             newEvent.save()
                 .then( newEvent => {
+                    console.log(newEvent)
                     resolve(newEvent)
                 })
                 .catch( error =>{

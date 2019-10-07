@@ -90,10 +90,20 @@ export const apiSignIn = ({email, pass, remember}) => {
 
   }
 
-export const apiEventCreate = ({creator, event, eventTitle, date, location, venue, price })=>{
+export const apiEventCreate = ({event, eventTitle, date, location, venue, price }, creator)=>{
+  console.log('apiEventCreate firing')
   return new Promise((resolve, reject)=>{
-    Axios.post(`api/create-event`)
+    Axios.post(`/admin/api/newEvent`,{
+      creator:creator,
+      event: event,
+      eventTitle: eventTitle,
+      date: date,
+      location: location,
+      venue: venue,
+      price: price
+    })
          .then(event =>{
+           console.log('apiEventCreate successfully fired')
            resolve(event)
          })
          .catch(error =>{

@@ -8,5 +8,6 @@ export default React.createContext({
     signUp:()=>{},
     follow:()=>{},
     fillFollowerList:()=>{},
-    illFollowsList:()=>{}
+    fillFollowsList:()=>{},
+    eventAdd: ()=>{}
 })

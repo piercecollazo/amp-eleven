@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 import Navigation from './components/Nav'
 import Context from './context/Context';
-import {apiSignIn, apiSignUp, apiUserUpdate} from './api/Api'
+import {apiSignIn, apiSignUp, apiUserUpdate, apiEventCreate} from './api/Api'
 import {Route, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom'
 
 import Home from './components/Home'
@@ -87,7 +87,7 @@ export default class App extends Component {
               .then( (user) => {
                 console.log(user._id)
               this.setState({
-                user: user.email,
+                user: user,
                 isAuth: true
               }, () => {
                 console.log('secondary function firing')
@@ -108,7 +108,7 @@ export default class App extends Component {
       apiUserUpdate(userInfo, this.state.user.id)
               .then( (user) => {
                 this.setState({
-                  user: user.email,
+                  user: user,
                   isAuth: true
                 }
               )
@@ -118,6 +118,19 @@ export default class App extends Component {
                 console.log(`Something happened, error: ${error}`)
               })
     }
+  }
+
+  eventAdd = (newEvent)=>{
+    console.log('eventAdd firing')
+    apiEventCreate(newEvent, this.state.user.id)
+                  .then(event => {
+                    console.log('success of eventAdd')
+                    console.log(event)
+                  })
+                  .catch(error => {
+                    console.log('Something went wrong with event creator')
+                    console.log(error)
+                  })
   }
 
   render(){
@@ -131,7 +144,8 @@ export default class App extends Component {
           signUp: this.signUp,
           user: this.state.user,
           fillFollowsList: this.fillFollowsList,
-          fillFollowerList: this.fillFollowerList
+          fillFollowerList: this.fillFollowerList,
+          eventAdd: this.eventAdd
         }}
       >
         <Router>

@@ -8,50 +8,73 @@ export default class UserControl extends Component {
         super(props)
 
         this.state = {
-            username:'',
-            email:'',
-            newPassword:'',
-            newPassConfirm:'',
-            oldPassConfirm:'',
-            genres:[],
-            creator: false
+            user:{
+                username:'',
+                email:'',
+                newPassword:'',
+                newPassConfirm:'',
+                oldPassConfirm:'',
+                genres:[],
+                creator: false
+            },
+            event:{
+                event: '',
+                eventTitle: '',
+                date: '',
+                location: '',
+                venue: '',
+                price: ''
+            }
         }
     }
-    stateUpdate = (event) => {
+    userStateUpdate = (event) => {
         event.preventDefault()
         this.setState({
-            [event.target.name]: event.target.value
+            user:{[event.target.name]: event.target.value}
+        })
+    }
+
+    eventStateUpdate = (event) => {
+        event.preventDefault()
+        this.setState({
+            event:{[event.target.name]: event.target.value}
         })
     }
 
     genreUpdate = (event)=>{
         event.preventDefault()
-        let tempArray = this.state.genres
+        let tempArray = this.state.user.genres
         tempArray.includes(event.target.name) ? 
             tempArray.splice(tempArray.indexOf(event.target.name))
             :
             tempArray.push(event.target.name)
 
         this.setState({
-            genres: tempArray
+            user:{genres: tempArray}
         })
         
     }
 
-    handleSubmit = (event)=>{
+    handleProfileSubmit = (event)=>{
         event.preventDefault()
+        console.log('submit filed from UserControl.js')
+        this.context.userUpdate(this.state.user)
+    }
 
-        this.context.userUpdate(this.state)
+    handleEventSubmit = (event)=>{
+        event.preventDefault()
+        console.log('submit filed from UserControl.js')
+            this.context.eventAdd(this.state.event)
     }
 
     creatorCheck = ()=> {
-        if(!this.state.creator){
+        if(!this.state.user.creator){
             this.setState({
-                creator: true
+                user:{creator: true}
             })
         } else {
             this.setState({
-                creator: false
+                user:{creator: false}
             })
         }
     }
@@ -59,27 +82,27 @@ export default class UserControl extends Component {
     render() {
         return (
             <div className='container user-control-container'>
-                <form className='px-4 py-3' onSubmit={this.handleSubmit}>
+                <form className='px-4 py-3' onSubmit={this.handleProfileSubmit}>
                     <h3>User Control</h3>
                     
                     <div className='form-group'>
                         <label>Username</label>
-                        <input className='form-control' name='username' onChange={this.stateUpdate} />
+                        <input className='form-control' name='username' onChange={this.userStateUpdate} />
                     </div>
 
                     <div className='form-group'>
                         <label>Email</label>
-                        <input className='form-control' name='email' onChange={this.stateUpdate} />
+                        <input className='form-control' name='email' onChange={this.userStateUpdate} />
                     </div>
 
                     <div className='form-group'>
                         <label>New Password</label>
-                        <input className='form-control' name='newPassword' onChange={this.stateUpdate} />
+                        <input className='form-control' name='newPassword' onChange={this.userStateUpdate} />
                     </div>
 
                     <div className='form-group'>
                         <label>Confirm Password</label>
-                        <input className='form-control' name='newPassConfirm' onChange={this.stateUpdate} />
+                        <input className='form-control' name='newPassConfirm' onChange={this.userStateUpdate} />
                     </div>
 
                     <div className='form-check'>
@@ -125,8 +148,44 @@ export default class UserControl extends Component {
                             </div>
                         </div>
 
-                        <div className='btn btn-danger' type='submit'>Submit</div>
+                        <button className='btn btn-primary' type='submit'>Submit</button>
                     </div>
+                </form>
+                <hr />
+                <form className='px-4 py-3' onSubmit={this.handleEventSubmit}>
+                    <h3>New event</h3>
+
+                    <div className='form-group'>
+                        <label>Event Title</label>
+                        <input className='form-control' name='eventTitle' onChange={this.eventStateUpdate} />
+                    </div>
+
+                    <div className='form-group'>
+                        <label>Event summary</label>
+                        <input className='form-control' name='event' onChange={this.eventStateUpdate} />
+                    </div>
+
+                    <div className='form-group'>
+                        <label>Event date</label>
+                        <input className='form-control' name='date' onChange={this.eventStateUpdate} />
+                    </div>
+
+                    <div className='form-group'>
+                        <label>Event address</label>
+                        <input className='form-control' name='location' onChange={this.eventStateUpdate} />
+                    </div>
+
+                    <div className='form-group'>
+                        <label>Event Venue name</label>
+                        <input className='form-control' name='venue' onChange={this.eventStateUpdate} />
+                    </div>
+
+                    <div className='form-group'>
+                        <label>Price of admission</label>
+                        <input className='form-control' name='price' onChange={this.eventStateUpdate} />
+                    </div>
+
+                    <button className='btn btn-success' type='submit'>Submit event</button>
                 </form>
             </div>
         )
