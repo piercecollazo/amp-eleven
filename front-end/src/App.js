@@ -137,8 +137,7 @@ export default class App extends Component {
         <Router>
         <Navigation />
         <Switch>
-          <Route exact path='/' render={(props) => <Home {...props}/>} />
-          <Route exact path='/test' render={(props) => <LoggedHome {...props}/>} />
+            <Route exact path='/' render={(props) => this.state.isAuth === false ? <Home {...props}/> : <LoggedHome {...props} />} />
           <Route path="/signup" render={(props) => <SignUp  {...props} />} />
           <Route path="/profile/:id" render={(props) => <Profile {...props} />} />
           <Route exact path="/About" render={(props) => <About  {...props} />} />

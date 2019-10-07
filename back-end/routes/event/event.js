@@ -41,27 +41,23 @@ router.post('/instant-search', eventController.instantSearch)
 router.get('/all-events', 
     eventController.getAllEvents)
 
-router.get('/:id', function (req, res) {
+router.get('api/event/:id', function (req, res) {
     eventController.getEventByID(req.params.id)
                         .then( event => {
-                            res.render('event/event', {
-                                event: event
-                            })
+                            res.json(event)
                         })
                         .catch( error => {
-                            res.status(error.status).json(error)
+                            res.json(error)
                         })
 })
 
-router.get('/geteventsbycategoryid/:id', function (req, res) {
+router.get('api/eventsByCategory/:id', function (req, res) {
     eventController.getEventsByCategoryID(req.params.id)
                         .then(events => {
-                            res.render('event/events', {
-                                events: events
-                            })
+                            res.json(events)
                         })
                         .catch( error => {
-                            res.status(error.status).json(error)
+                            res.json(error)
                         })
 })
 
