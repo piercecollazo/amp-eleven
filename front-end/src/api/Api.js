@@ -90,15 +90,15 @@ export const apiSignIn = ({email, pass, remember}) => {
 
   }
 
+export const apiEventCreate = ({creator, event, eventTitle, date, location, venue, price })=>{
+  return new Promise((resolve, reject)=>{
+    Axios.post(`api/create-event`)
+         .then(event =>{
+           resolve(event)
+         })
+         .catch(error =>{
+           reject(error)
+         })
+  })
 
-//   export const querySearch = (query)=>{
-//       return new Promise((resolve, reject)=>{
-//           Axios.get('http://localhost:9200/events/event/_search', {data: JSON.stringify(query)
-//         }).then((res)=> {
-//               resolve(res);
-//           })
-//           .catch(error =>{
-//               reject(error)
-//           })
-//       })
-//   }
+}

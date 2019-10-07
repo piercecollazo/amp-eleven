@@ -34,14 +34,14 @@ router.post('/add-category', categoryValidation, function (req, res) {
 
 router.get('/get-all-categories', categoryController.getAllCategories)
 
-router.post('/create-event/:categoryName/:categoryID', function (req, res){
-    createEventController.createEventByCategoryID(req)
+router.post('api/create-event/:categoryName/:categoryID', function (req, res){
+    createEventController.createEventByCategoryID(req.body)
     .then(newEvent=> {
         res.json(newEvent)
         console.log('New event created')
     })
     .catch(error => {
-        res.status(errors.status.json(error))
+        res.json(error)
     })
 })
 

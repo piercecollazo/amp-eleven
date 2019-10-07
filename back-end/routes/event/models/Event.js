@@ -11,6 +11,7 @@ let EventSchema = new mongoose.Schema({
         },
         creator: { type: mongoose.Schema.Types.ObjectId, ref: 'user'},
         event: { type: String, es_type: 'text', default: ''},
+        eventTitle: {type: String, es_type: 'text', default: ''},
         date: { type: Number, es_type: 'long', default: 0 },
         location: {type: String, es_type: 'text', default: ''},
         venue: {type: String, es_type: 'text', deafult: ''},

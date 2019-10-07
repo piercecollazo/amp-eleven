@@ -13,6 +13,7 @@ module.exports = {
 
             newEvent.creator  = params.body.creator
             newEvent.event    = params.body.event
+            newEvent.eventTitle = params.body.eventTitle
             newEvent.date     = params.body.date
             newEvent.location = params.body.location
             newEvent.venue    = params.body.venue
