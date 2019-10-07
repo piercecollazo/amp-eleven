@@ -51,11 +51,6 @@ module.exports = {
                         })
             })
         },
-        // getPageIfUserLoggedIn: (req, res, next) => {
-        //     // res.render('product/index-product')
-        //     if (req.user) paginate(req, res, next)
-        //     else res.render('product/index-product')
-        // },
         searchEventByQuery: (req, res) => {
             if (req.query.q) {
                 Event.search({
@@ -75,7 +70,8 @@ module.exports = {
                     }
                 })
             }
-        },
+        }
+        ,
         instantSearch: (req, res) => {
             // console.log(req)
             Event.search({

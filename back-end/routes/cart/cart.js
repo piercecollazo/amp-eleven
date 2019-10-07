@@ -8,9 +8,6 @@ let User = require('../users/model/User')
 
 let cartController = require('./controllers/cartController')
 
-router.get('/', cartController.getUserShoppingCart);
-
-
 router.post('/add-event/:owner', function (req,res) { 
     // console.log(req)
     cartController.addEventToCart(req)

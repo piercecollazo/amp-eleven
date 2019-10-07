@@ -39,24 +39,7 @@ module.exports = {
             })
         })
     },
-    getUserShoppingCart: (req, res) => {
-        User.findOne({ owner: req.user_id})
-            .populate('events.event')
-            .exec()
-            .then( user => {
-                // res.render('user/cart', {
-                //     foundCart: cart,
-                //     message: req.flash('remove')
-                // })
-            })
-            .catch( error => {
-                let errors = {}
-                errors.status = 500
-                errors.message = error
-                
-                res.status(errors.status).json(errors)
-            })
-    },
+    
     removeEvent: (req, res) => {
         return new Promise((resolve, reject) => {
         User.findOne({ _id: req.params.owner})
