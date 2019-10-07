@@ -30,10 +30,6 @@ stream.on('error', function () {
     console.log("30: Error: " + error)
 })
 
-// router.get('/', eventController.getPageIfUserLoggedIn);
-
-// router.get('/page/:page', paginate);
-
 router.post('/search', (req, res) => {
     res.redirect('/api/event/search?q=' + req.body.q)
 })
